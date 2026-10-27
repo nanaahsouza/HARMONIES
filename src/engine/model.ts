@@ -14,10 +14,10 @@ export type HeldCard = {id:string;placed:number};
 export type Player = {board:Board;cards:HeldCard[];turns:number};
 export type Game = {
  pulse?:boolean;
- side:Side;players:[Player,Player];bag:Color[];deck:string[];
- market:Color[][];animals:(string|null)[];turn:0|1;first:0|1;
+ side:Side;players:Player[];bag:Color[];deck:string[];
+ market:Color[][];animals:(string|null)[];turn:number;first:number;
  selected:number|null;hand:Color[];tookCard:boolean;
- finalRound:boolean;finished:boolean;
+ finalRound:boolean;finished:boolean;endReason?:'host';
 };
 export type Action =
  | {type:'takeTokens';slot:number}

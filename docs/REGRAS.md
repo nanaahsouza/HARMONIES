@@ -15,7 +15,7 @@ Fontes:
 | ID | Regra/decisão normativa | Fonte, página/seção | Implementação | Testes | Status |
 |---|---|---|---|---|---|
 | R01 | 120 peças: azul23, cinza23, marrom21, verde19, amarelo19, vermelho15; 32 animais; 66 cubos de animais | BR2 | `model.COUNTS`, `freshTokens`, `setup` | R01 | Validado, texto e imagem |
-| R02 | Duas pessoas, cinco trios e cinco cartas; ambos escolhem mesmo lado; primeiro por última paisagem magnífica | BR2–3 | `setup`, `Store.act(configure/ready/start)` | R01, M01 | Validado |
+| R02 | De 2 a 4 pessoas, cinco trios e cinco cartas; todos escolhem o mesmo lado; primeiro por última paisagem magnífica | BR2–3 | `setup`, `Store.act(configure/ready/start)` | R01, M01 | Validado |
 | R03 | Tabuleiro de 23 espaços, colunas5/4/5/4/5, adjacência por aresta | BR3, diagrama tabuleiro | `emptyBoard`, `neighbors` | R02 | Validado visualmente |
 | R04 | Uma escolha de trio por turno, três peças obrigatórias; ações opcionais intercaláveis | BR4–5 | `applyAction` | R06, R07 | Validado |
 | R05 | Qualquer peça em célula vazia; não inserir abaixo, não colocar em célula com cubo | BR4, diagrama | `canStack`, `applyAction(placeToken)` | R03, R07 | Validado visualmente |
@@ -38,7 +38,7 @@ Fontes:
 | R22 | Mais pontos, depois mais cubos posicionados, depois empate compartilhado | BR7 | `scores`, `winners` | R18 | Validado |
 | R23 | Reserva física66 não é teto de jogadas; substitutos quando acaba | BR2; FAQ Number of Animal Cubes | contadores por carta, sem teto artificial | R01; inspeção implementação | Validado, não exige reposição virtual finita |
 | C01–C32 | Requisitos de cores, alturas, geometria, pontos e destino de cada carta | CARTAS, posição individual | `animals.ts` | C01–C32, R04 | 32 inspeções visuais; seis cruzamentos Libellud |
-| T01 | Estado autoritativo, privado por dois participantes, terceiro rejeitado | Requisito técnico do pedido | `Store`, HTTP | M01, M04 | Executado localmente |
+| T01 | Estado autoritativo para 2 a 4 participantes; entrada excedente rejeitada | Requisito técnico do pedido | `Store`, HTTP | M01, M04 | Executado localmente |
 | T02 | Revisão e ID de ação; sem duplicação; commit atômico do estado e recibo | Requisito técnico | `Store.act` | M01, M02 | Executado localmente |
 | T03 | Sessão e partida após reinício; SSE após reconexão | Requisito técnico | SQLite, HTTP events, efeito cliente | M01; U01/U02 | Executado localmente |
 | T04 | Validação payload/origem e nome; sem pontuação do cliente | Requisito técnico | HTTP, `safeName`, motor | M03 | Executado localmente |
@@ -54,8 +54,12 @@ Fontes:
 - Rio usa busca em largura a partir de cada célula azul e toma a maior distância mínima, contando extremidades. É o diâmetro de cada componente azul, não o caminho simples máximo nem o total do componente. Ciclos e atalhos recebem regressões específicas.
 - Ilhas usam o complemento da água dentro das23 células; não dependem de preencher o restante do tabuleiro com peças.
 - A bolsa tem105 peças após a preparação. Uma reposição retira3. Chegar a zero depois de retirar o último trio não dispara fim imediatamente; a próxima reposição encontra a bolsa vazia. O encerramento completa a rodada relativa ao primeiro jogador escolhido.
-- Cartas não são repostas entre ações. Se não houver carta disponível no monte, não é criado descarte/embaralhamento alternativo. Em partida legal de dois jogadores o tabuleiro limita o número de cartas completáveis antes do encerramento.
+- Cartas não são repostas entre ações. Se não houver carta disponível no monte, não é criado descarte/embaralhamento alternativo. O esgotamento do baralho deixa os espaços sem reposição; a partida continua conforme os gatilhos normais de fim.
 
 ## Pendências normativas
 
 Nenhuma regra foi preenchida por memória. Os32 nomes oficiais não foram verificáveis textualmente; por isso30 campos `officialName` são nulos. Isso não afeta os padrões. A proveniência das26 cartas vistas só na adaptação licenciada, sem uma folha completa publicada diretamente pela Libellud, permanece explicitamente registrada. Uma conferência futura com o baralho físico pode ser útil para auditoria editorial; não foi alegada certificação da editora.
+
+## Salas de 2 a 4 jogadores e encerramento administrativo
+A preparação, os cinco conjuntos, a bolsa de 120 peças e as regras de pontuação são comuns aos modos de 2, 3 e 4 pessoas. A ordem é circular a partir do primeiro escolhido, e o fim natural completa a rodada para igualar os turnos. Testes N/E/F cobrem todos os primeiros jogadores e gatilhos por qualquer assento.
+O botão exclusivo do host é uma função administrativa, não uma regra de vitória: desfaz o turno incompleto, termina para todos e identifica o placar como parcial, sem vencedor oficial.

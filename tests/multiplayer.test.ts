@@ -67,3 +67,22 @@ test('M03 validação de payload, nome, origem e bloqueio de sala cheia na persi
 test('M04 sessão de outra sala não tem acesso; segredo não aparece no estado',()=>{
  const store=new Store(':memory:');try{const a=store.create('A'),b=store.create('B');assert.throws(()=>store.identity(a.room.code,b.token),/inválida/);const visible=JSON.stringify(store.public(a.room,0));assert.equal(visible.includes(a.token),false);assert.equal(visible.includes('token_hash'),false);}finally{store.close();}
 });
+
+test('M05 quatro sessões HTTP/SSE: identidade, conexão, sincronização e host encerra',async()=>{
+ const app=createApp({database:':memory:'}),base=await listen(app),connections:Awaited<ReturnType<typeof stream>>[]=[];
+ try{
+  const a=(await call(base,'/api/rooms',{name:'Host',playerCount:4})).body,code=a.state.code,path=`/api/rooms/${code}`,tokens=[a.token];
+  for(let i=1;i<4;i++){const joined=await call(base,path+'/join',{name:`Pessoa ${i}`});assert.equal(joined.status,201);assert.equal(joined.body.state.seat,i);tokens.push(joined.body.token);}
+  for(const token of tokens)connections.push(await stream(base,code,token));
+  for(let i=0;i<4;i++){const state=await connections[i].next(3);assert.equal(state.seat,i);assert.equal(state.seats.length,4);}
+  const all=await call(base,path,undefined,tokens[3]);assert.ok(all.body.seats.every((s:any)=>s.connected));
+  const act=async(i:number,action:Record<string,unknown>)=>{const current=await call(base,path,undefined,tokens[i]);return call(base,path+'/actions',{id:randomUUID(),revision:current.body.revision,action},tokens[i]);};
+  await act(0,{type:'configure',side:'A',first:2,pulse:true});for(let i=0;i<4;i++)await act(i,{type:'ready',ready:true});
+  const started=await act(0,{type:'start'});assert.equal(started.status,200);assert.equal(started.body.game.players.length,4);assert.equal(started.body.game.turn,2);
+  const taken=await act(2,{type:'takeCard',slot:0});assert.equal(taken.status,200);
+  for(let i=0;i<4;i++){const state=await connections[i].next(taken.body.revision);assert.equal(state.game.players[2].cards.length,1);assert.equal(state.seat,i);}
+  assert.equal((await act(3,{type:'finishGame'})).body.code,'HOST');
+  const final=await act(0,{type:'finishGame'});assert.equal(final.status,200);
+  for(const connection of connections){const state=await connection.next(final.body.revision);assert.equal(state.game.finished,true);assert.equal(state.game.endReason,'host');assert.equal(state.game.players[2].cards.length,0);assert.equal('turnStart' in state,false);}
+ }finally{connections.forEach(s=>s.abort.abort());await stop(app);}
+});

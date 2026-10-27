@@ -8,7 +8,7 @@ import {scores,winners} from '../engine/scoring.ts';
 import {requireRule,RuleError} from '../engine/model.ts';
 import type {Action,Game,Side} from '../engine/model.ts';
 type Seat={name:string;ready:boolean};
-export type Room={code:string;revision:number;createdAt:string;updatedAt:string;side:Side;first:0|1;pulse:boolean;seats:Seat[];game:Game|null;turnStart?:Game};
+export type Room={code:string;revision:number;createdAt:string;updatedAt:string;side:Side;first:number;playerCount:number;pulse:boolean;seats:Seat[];game:Game|null;turnStart?:Game};
 export const hash=(s:string)=>createHash('sha256').update(s).digest('hex');
 export function shuffle<T>(values:T[]):T[]{const a=[...values];for(let i=a.length-1;i>0;i--){const j=randomInt(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
 export class Store {
@@ -21,23 +21,23 @@ export class Store {
  }
  close(){this.db.close();}
  transaction<T>(fn:()=>T):T{this.db.exec('BEGIN IMMEDIATE');try{const r=fn();this.db.exec('COMMIT');return r;}catch(e){this.db.exec('ROLLBACK');throw e;}}
- get(code:string):Room {const row=this.db.prepare('SELECT state FROM rooms WHERE code=?').get(code) as {state:string}|undefined;requireRule(row,'ROOM','Sala não encontrada.');const room:Room=JSON.parse(row.state);room.pulse=room.game?.pulse??room.pulse??false;if(room.game)room.game.pulse??=room.pulse;return room;}
+ get(code:string):Room {const row=this.db.prepare('SELECT state FROM rooms WHERE code=?').get(code) as {state:string}|undefined;requireRule(row,'ROOM','Sala não encontrada.');const room:Room=JSON.parse(row.state);room.playerCount??=room.game?.players.length??2;room.pulse=room.game?.pulse??room.pulse??false;if(room.game)room.game.pulse??=room.pulse;return room;}
  save(room:Room){room.updatedAt=new Date().toISOString();this.db.prepare('INSERT INTO rooms(code,state) VALUES(?,?) ON CONFLICT(code) DO UPDATE SET state=excluded.state').run(room.code,JSON.stringify(room));}
  identity(code:string,token:string):number {
   const row=this.db.prepare('SELECT seat FROM sessions WHERE room=? AND token_hash=?').get(code,hash(token)) as {seat:number}|undefined;
   requireRule(row,'AUTH','Sessão inválida. Entre com o link e a sessão original.');return row.seat;
  }
- create(name:string){return this.transaction(()=>{
+ create(name:string,playerCount=2){requireRule(Number.isInteger(playerCount)&&playerCount>=2&&playerCount<=4,'PLAYER_COUNT','Escolha entre 2 e 4 jogadores.');return this.transaction(()=>{
   let code:string;do{code=randomBytes(9).toString('base64url').toUpperCase();}while(this.db.prepare('SELECT 1 FROM rooms WHERE code=?').get(code));
   const token=randomBytes(32).toString('base64url'),now=new Date().toISOString();
-  const room:Room={code,revision:0,createdAt:now,updatedAt:now,side:'A',first:0,pulse:false,seats:[{name,ready:false}],game:null};
+  const room:Room={code,revision:0,createdAt:now,updatedAt:now,side:'A',first:0,playerCount,pulse:false,seats:[{name,ready:false}],game:null};
   this.save(room);this.db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hash(token),code,0);return {room,token,seat:0};
  });}
  join(code:string,name:string){return this.transaction(()=>{
-  const room=this.get(code);requireRule(room.seats.length<2,'FULL','Esta sala já tem dois participantes.');
+  const room=this.get(code);requireRule(room.seats.length<room.playerCount,'FULL','Esta sala já está cheia.');
   requireRule(!room.game,'STARTED','A partida já começou.');
-  const token=randomBytes(32).toString('base64url');room.seats.push({name,ready:false});room.revision++;this.save(room);
-  this.db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hash(token),code,1);return {room,token,seat:1};
+  const token=randomBytes(32).toString('base64url');room.seats.push({name,ready:false});room.seats.forEach(s=>s.ready=false);room.revision++;this.save(room);
+  this.db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hash(token),code,room.seats.length-1);return {room,token,seat:room.seats.length-1};
  });}
  act(code:string,token:string,envelope:{id:string;revision:number;action:Record<string,unknown>}):Room{return this.transaction(()=>{
   const seat=this.identity(code,token),room=this.get(code),payloadHash=hash(JSON.stringify(envelope));
@@ -47,19 +47,27 @@ export class Store {
   const action=envelope.action;
   if(action.type==='configure'){
    requireRule(!room.game,'STARTED','A partida já começou.');requireRule(seat===0,'HOST','Somente o criador pode ajustar a preparação.');
-   requireRule(action.side==='A'||action.side==='B','SIDE','Lado inválido.');requireRule(action.first===0||action.first===1,'FIRST','Primeiro jogador inválido.');
+   requireRule(action.side==='A'||action.side==='B','SIDE','Lado inválido.');const count=action.playerCount??room.playerCount;
+   requireRule(typeof count==='number'&&Number.isInteger(count)&&count>=2&&count<=4&&count>=room.seats.length,'PLAYER_COUNT','Escolha entre 2 e 4 lugares, sem remover participantes.');
+   requireRule(typeof action.first==='number'&&Number.isInteger(action.first)&&action.first>=0&&action.first<room.seats.length,'FIRST','Primeiro jogador inválido.');
    requireRule(action.pulse===undefined||typeof action.pulse==='boolean','EXPANSION','Opção Pulsar inválida.');
-   room.side=action.side;room.first=action.first;room.pulse=(action.pulse??room.pulse) as boolean;room.seats.forEach(s=>s.ready=false);
+   room.playerCount=count;room.side=action.side;room.first=action.first;room.pulse=(action.pulse??room.pulse) as boolean;room.seats.forEach(s=>s.ready=false);
   }else if(action.type==='ready'){
    requireRule(!room.game,'STARTED','A partida já começou.');requireRule(typeof action.ready==='boolean','READY','Confirmação inválida.');room.seats[seat].ready=action.ready;
   }else if(action.type==='start'){
    requireRule(seat===0,'HOST','Somente o criador pode iniciar.');requireRule(!room.game,'STARTED','A partida já começou.');
-   requireRule(room.seats.length===2&&room.seats.every(s=>s.ready),'NOT_READY','Os dois participantes devem confirmar o lado e o primeiro jogador.');
+   requireRule(room.seats.length===room.playerCount&&room.seats.every(s=>s.ready),'NOT_READY','Todos os lugares devem estar ocupados e todos devem confirmar a preparação.');
    const catalog=catalogFor(room.pulse);
-   room.game=setup(room.side,room.first,shuffle(freshTokens()),shuffle(catalog.map(c=>c.id)),catalog,room.pulse);
+   room.game=setup(room.side,room.first,shuffle(freshTokens()),shuffle(catalog.map(c=>c.id)),catalog,room.pulse,room.playerCount);
   }else {
    requireRule(room.game,'NOT_STARTED','A partida ainda não começou.');
-   if(action.type==='restartTurn'){
+   if(action.type==='finishGame'){
+    requireRule(seat===0,'HOST','Somente o host pode encerrar a partida.');
+    requireRule(!room.game.finished,'FINISHED','A partida já terminou.');
+    // Encerramento administrativo: descarta o turno incompleto, sem atribuir vitória oficial.
+    if(room.turnStart)room.game=structuredClone(room.turnStart);
+    room.game.finished=true;room.game.endReason='host';delete room.turnStart;
+   }else if(action.type==='restartTurn'){
     requireRule(!room.game.finished,'FINISHED','A partida já terminou.');
     requireRule(room.game.turn===seat,'TURN','Você só pode reiniciar seu próprio turno.');
     requireRule(room.turnStart&&room.turnStart.turn===seat,'NO_RESTART','Não há jogadas deste turno para desfazer. Turnos encerrados não podem ser reiniciados.');
@@ -73,11 +81,11 @@ export class Store {
   }
   room.revision++;this.save(room);this.db.prepare('INSERT INTO receipts VALUES(?,?,?,?)').run(code,seat,envelope.id,payloadHash);return room;
  });}
- public(room:Room,seat:number,connected:boolean[]=[false,false]){
+ public(room:Room,seat:number,connected:boolean[]=[]){
   const game=room.game;
   const catalog=catalogFor(game?.pulse??room.pulse);
   // Nunca expõe a ordem da bolsa ou do baralho. Dicas de posições são calculadas pelo servidor.
-  const visible=game?{...game,bag:undefined,deck:undefined,bagCount:game.bag.length,deckCount:game.deck.length,scores:scores(game,catalog),winners:game.finished?winners(game,catalog):[],hints:game.turn===seat&&!game.finished?{
+  const visible=game?{...game,bag:undefined,deck:undefined,bagCount:game.bag.length,deckCount:game.deck.length,scores:scores(game,catalog),winners:game.finished&&game.endReason!=='host'?winners(game,catalog):[],hints:game.turn===seat&&!game.finished?{
    tokens:Object.fromEntries([...new Set(game.hand)].map(color=>[color,Object.keys(game.players[seat].board).filter(id=>canStack(game.players[seat].board[id],color))])),
    animals:Object.fromEntries(game.players[seat].cards.filter(h=>h.placed<(catalog.find(c=>c.id===h.id)?.points.length??0)).map(h=>[h.id,legalHabitats(game.players[seat].board,catalog.find(c=>c.id===h.id)!,game.pulse??false)]))
   }:{tokens:{},animals:{}}}:null;

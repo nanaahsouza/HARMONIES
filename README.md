@@ -1,8 +1,8 @@
-# Harmonies para dois jogadores
+# Harmonies Online — 2 a 4 jogadores
 
 Aplicação executável com React/TypeScript/Vite, motor independente, servidor Node 24, atualizações SSE e persistência SQLite. Inclui os 32 padrões de animais do jogo-base, tabuleiro de 23 células, ambos os lados A/B, pontuação, fim e desempates. Sem IA ou Espíritos da Natureza. A expansão **Pulsar é opcional**: selecione-a na preparação de uma nova sala para usar42 cartas e espelhamento nos novos padrões. Detalhes e fontes em `docs/PULSAR.md`.
 
-**Situação da entrega:** compilação e testes locais executados; fluxo de dois jogadores conferido no navegador local. Não houve implantação pública nem teste em dispositivos/redes diferentes. O critério de aceite “online em duas redes” permanece pendente até publicar e executar o roteiro de validação. Não existe URL pública desta entrega.
+**Situação da entrega:** compilação e testes locais executados; salas para 2, 3 e 4 jogadores, com 129 testes locais e fluxo de quatro participantes conferido no navegador. Não houve implantação pública nem teste em dispositivos/redes diferentes. O critério de aceite “online em duas redes” permanece pendente até publicar e executar o roteiro de validação. Não existe URL pública desta entrega.
 
 ## Executar
 
@@ -20,16 +20,21 @@ Abra **http://localhost:3001**. O mesmo servidor serve o frontend compilado e a 
 
 Para desenvolver com recarga automática, rode `pnpm server` em um terminal e `pnpm dev` em outro. Abra a URL impressa por Vite. O proxy encaminha `/api` ao Node na porta 3001. Para usar arquivo de configuração: copie `.env.example` para `.env` e inicie com `node --env-file=.env src/server/main.ts`.
 
-### Como jogar a dois
+### Como jogar com 2, 3 ou 4 pessoas
 
-1. A primeira pessoa informa o nome e cria uma sala. Copia o convite e o envia à outra pessoa.
-2. A segunda abre o link publicado, informa o próprio nome e entra. Também pode usar o código de 12 caracteres.
-3. O criador seleciona lado A/B e o primeiro jogador, conforme a regra da última paisagem magnífica. O criador também pode ligar/desligar Pulsar. Os dois confirmam a configuração; o criador inicia.
-4. Em seu turno, escolha um conjunto de três peças. Selecione uma peça da mão e uma célula. As posições legais vêm do servidor. Pode pegar uma carta e posicionar animais nos momentos permitidos, inclusive entre peças.
-5. Para um animal, clique em “Ver habitats”, escolha explicitamente destino/orientação e confirme “Posicionar cubo escolhido”. A interface nunca executa essa escolha sozinha.
-6. Depois das três peças, encerre o turno. O servidor repõe o mercado e aplica o fim de jogo. As cartas completas liberam espaço entre as quatro ativas.
+1. A primeira pessoa informa seu nome, escolhe 2, 3 ou 4 jogadores e cria a sala. Compartilha o convite com os demais.
+2. Cada participante abre o link, informa seu nome e entra. Todos os lugares escolhidos precisam estar ocupados para iniciar. O host pode mudar o número de lugares na preparação, sem remover quem já entrou.
+3. O host escolhe o lado A/B, o primeiro jogador e se a expansão Pulsar será usada. Todos confirmam a preparação. Entradas e alterações na configuração retiram as confirmações anteriores.
+4. Os turnos seguem a ordem de entrada, a partir do primeiro jogador escolhido. Pegue três peças e coloque-as no tabuleiro. Cartas e animais podem ser escolhidos nos momentos permitidos.
+5. Para colocar um animal, toque na própria carta ou no cubo sobre ela e depois em um destino destacado no seu tabuleiro. O servidor valida o habitat e a orientação.
+6. Antes de encerrar, “Reiniciar meu turno” devolve as escolhas e colocações daquele turno. Depois de “Encerrar turno”, não é possível voltar.
+7. Use “Ver tabuleiro” para consultar qualquer participante. Somente o seu tabuleiro pode receber suas peças e cubos.
+8. O fim normal ocorre por falta de peças na reposição ou por um tabuleiro com duas ou menos casas vazias. A rodada é completada para todos terem o mesmo número de turnos. Pontos e desempates são calculados para todos os participantes.
+9. O host tem o botão “Encerrar partida”, com confirmação. Ele encerra imediatamente, desfazendo o turno em andamento. O resultado é identificado como placar parcial, sem vencedor oficial, e a partida não pode continuar.
 
-Em teste no mesmo computador, use dois navegadores/perfis diferentes. Duas abas no mesmo perfil e na mesma origem compartilham a identidade. Para a conferência local desta entrega foram usadas origens `127.0.0.1` e `localhost`, com armazenamento separado, conectadas ao mesmo servidor. Essas URLs **não** são endereços públicos.
+O número de jogadores fica fixo após o início. Salas antigas continuam com dois jogadores. A expansão Pulsar é compatível com todos os tamanhos de sala.
+
+Em testes no mesmo computador, use navegadores/perfis diferentes. Abas no mesmo perfil e origem compartilham a identidade. Acesso de casas diferentes requer publicar o servidor ou configurar acesso remoto; localhost não é endereço público.
 
 ## Arquitetura e arquivos
 

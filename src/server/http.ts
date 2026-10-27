@@ -7,7 +7,7 @@ import {requireRule,RuleError} from '../engine/model.ts';
 type Stream={res:ServerResponse;seat:number};
 export function createApp({database='data/harmonies.sqlite',origin='',dist=resolve('dist')}={}){
  const store=new Store(database),streams=new Map<string,Set<Stream>>(),limits=new Map<string,{n:number;until:number}>();
- function publish(code:string){const clients=streams.get(code);if(!clients)return;const room=store.get(code),connected=[0,1].map(seat=>[...clients].some(c=>c.seat===seat));for(const c of clients)c.res.write(`data: ${JSON.stringify(store.public(room,c.seat,connected))}\n\n`);}
+ function publish(code:string){const clients=streams.get(code);if(!clients)return;const room=store.get(code),connected=room.seats.map((_,seat)=>[...clients].some(c=>c.seat===seat));for(const c of clients)c.res.write(`data: ${JSON.stringify(store.public(room,c.seat,connected))}\n\n`);}
  const json=(res:ServerResponse,status:number,body:unknown)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(body));};
  async function body(req:IncomingMessage){requireRule(req.headers['content-type']?.split(';')[0]==='application/json','CONTENT_TYPE','Envie JSON.');let data='';for await(const chunk of req){data+=chunk;requireRule(Buffer.byteLength(data)<=8192,'BODY_SIZE','Mensagem muito grande.');}try{return JSON.parse(data);}catch{throw new RuleError('JSON','JSON inválido.');}}
  const server=createServer(async(req,res)=>{
@@ -22,12 +22,12 @@ export function createApp({database='data/harmonies.sqlite',origin='',dist=resol
     requireRule(++limit.n<=240,'RATE_LIMIT','Muitas requisições. Aguarde um minuto.');
     if(req.headers.origin){const expected=origin||`http://${req.headers.host}`;requireRule(req.headers.origin===expected,'ORIGIN','Origem da requisição não autorizada.');}
     if(req.method==='POST'&&url.pathname==='/api/rooms'){
-     const data=await body(req),created=store.create(safeName(data.name));json(res,201,{token:created.token,state:store.public(created.room,0)});return;
+     const data=await body(req),created=store.create(safeName(data.name),data.playerCount??2);json(res,201,{token:created.token,state:store.public(created.room,0)});return;
     }
     const match=url.pathname.match(/^\/api\/rooms\/([A-Z0-9_-]{12})(?:\/(join|actions|events))?$/);
     requireRule(match,'ROUTE','Endereço inválido.');const [,code,endpoint]=match;
     if(req.method==='POST'&&endpoint==='join'){
-     const data=await body(req),joined=store.join(code,safeName(data.name));json(res,201,{token:joined.token,state:store.public(joined.room,1)});publish(code);return;
+     const data=await body(req),joined=store.join(code,safeName(data.name));json(res,201,{token:joined.token,state:store.public(joined.room,joined.seat)});publish(code);return;
     }
     const auth=req.headers.authorization;requireRule(typeof auth==='string'&&auth.startsWith('Bearer ')&&auth.length<=128,'AUTH','Sessão necessária.');const token=auth.slice(7),seat=store.identity(code,token);
     if(req.method==='GET'&&endpoint==='events'){
@@ -37,7 +37,7 @@ export function createApp({database='data/harmonies.sqlite',origin='',dist=resol
      const heartbeat=setInterval(()=>res.write(': keep-alive\n\n'),20_000);
      res.on('close',()=>{clearInterval(heartbeat);clients.delete(client);if(clients.size)publish(code);else streams.delete(code);});return;
     }
-    if(req.method==='GET'&&!endpoint){json(res,200,store.public(store.get(code),seat,[0,1].map(s=>[...(streams.get(code)??[])].some(c=>c.seat===s))));return;}
+    if(req.method==='GET'&&!endpoint){json(res,200,store.public(store.get(code),seat,store.get(code).seats.map((_,s)=>[...(streams.get(code)??[])].some(c=>c.seat===s))));return;}
     if(req.method==='POST'&&endpoint==='actions'){
      const data=await body(req);requireRule(data&&typeof data.id==='string'&&/^[a-zA-Z0-9_-]{16,80}$/.test(data.id)&&Number.isSafeInteger(data.revision)&&data.revision>=0&&data.action&&typeof data.action==='object'&&!Array.isArray(data.action),'ENVELOPE','Mensagem de ação inválida.');
      const room=store.act(code,token,data);json(res,200,store.public(room,seat));publish(code);return;

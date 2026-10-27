@@ -30,14 +30,15 @@ export function legalHabitats(board:Board,card:AnimalCard,allowMirror=false):{an
   const a=board[anchor],v=orient(card.cube,rotation,mirrored);result.push({anchor,rotation,mirrored,destination:key({q:a.q+v.q,r:a.r+v.r})});
  }return result;
 }
-export function setup(side:Side,first:0|1,bag:Color[],deck:string[],catalog:AnimalCard[],pulse=false):Game {
+export function setup(side:Side,first:number,bag:Color[],deck:string[],catalog:AnimalCard[],pulse=false,playerCount=2):Game {
  validateCatalog(catalog,pulse);
  requireRule(side==='A'||side==='B','SIDE','Lado inválido.');
- requireRule(first===0||first===1,'FIRST','Primeiro jogador inválido.');
+ requireRule(Number.isInteger(playerCount)&&playerCount>=2&&playerCount<=4,'PLAYER_COUNT','Escolha entre 2 e 4 jogadores.');
+ requireRule(Number.isInteger(first)&&first>=0&&first<playerCount,'FIRST','Primeiro jogador inválido.');
  requireRule(bag.length===120&&COLORS.every(c=>bag.filter(t=>t===c).length===COUNTS[c]),'BAG','Distribuição incorreta de peças.');
  requireRule(deck.length===catalog.length&&new Set(deck).size===catalog.length&&deck.every(id=>catalog.some(c=>c.id===id)),'DECK','Baralho inválido.');
  const tokens=[...bag],cards=[...deck];
- return {pulse,side,first,turn:first,players:[{board:emptyBoard(),cards:[],turns:0},{board:emptyBoard(),cards:[],turns:0}],bag:tokens.slice(15),deck:cards.slice(5),market:Array.from({length:5},(_,i)=>tokens.slice(i*3,i*3+3)),animals:cards.slice(0,5),selected:null,hand:[],tookCard:false,finalRound:false,finished:false};
+ return {pulse,side,first,turn:first,players:Array.from({length:playerCount},()=>({board:emptyBoard(),cards:[],turns:0})),bag:tokens.slice(15),deck:cards.slice(5),market:Array.from({length:5},(_,i)=>tokens.slice(i*3,i*3+3)),animals:cards.slice(0,5),selected:null,hand:[],tookCard:false,finalRound:false,finished:false};
 }
 export function applyAction(state:Game,player:number,action:Action,catalog:AnimalCard[]):Game {
  requireRule(!state.finished,'FINISHED','A partida terminou.');
@@ -78,8 +79,8 @@ export function applyAction(state:Game,player:number,action:Action,catalog:Anima
    s.animals=s.animals.map(c=>c??s.deck.shift()??null);
    if(Object.values(p.board).filter(c=>c.stack.length===0).length<=2)s.finalRound=true;
    p.turns++;
-   if(s.finalRound&&s.players[0].turns===s.players[1].turns)s.finished=true;
-   else s.turn=s.turn===0?1:0;
+   if(s.finalRound&&s.players.every(player=>player.turns===s.players[0].turns))s.finished=true;
+   else s.turn=(s.turn+1)%s.players.length;
    s.selected=null;s.hand=[];s.tookCard=false;break;
   }
   default:requireRule(false,'ACTION','Ação desconhecida.');

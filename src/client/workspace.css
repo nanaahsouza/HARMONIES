@@ -172,3 +172,9 @@ body:has(.game-workspace) .turn-bar{min-height:64px}@media(max-width:800px){body
  .game-workspace .revealed-panel .cards{gap:5px}
  .game-workspace .market.sculpted-market{max-width:230px}
 }
+.turn-bar .finish-game,.finish-game{background:#fff0ef;color:#b34235;border:1px solid #f0c9c4;font-size:11px;padding:10px 12px;white-space:nowrap}
+.finish-dialog{max-width:460px;width:100%;background:#fff;padding:26px;border-radius:20px;box-shadow:0 15px 70px #0003}
+.finish-dialog h2{font:600 22px system-ui;margin:0 0 14px}.finish-dialog p{font:14px/1.6 system-ui;color:#657080}.finish-dialog>div{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:20px}
+.section-heading .board-view{font:10px system-ui;color:#7c8592;display:flex;align-items:center;gap:7px;margin:0}.board-view select{width:auto;max-width:210px;font-size:12px;padding:7px 10px;margin:0;min-height:34px}
+.room-bar .players{flex-wrap:wrap}.results{overflow-x:auto}.results h2{font-size:20px}
+@media(max-width:800px){.section-heading .board-view{font-size:9px}.board-view select{max-width:170px;font-size:11px}.finish-dialog{padding:20px}.finish-dialog>div button{flex:1}.turn-bar>.finish-game{flex-basis:100%!important}}

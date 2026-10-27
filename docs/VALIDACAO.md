@@ -136,3 +136,13 @@ Executados70 testes (55 anteriores +15 Pulsar), todos aprovados, e build TypeScr
 - Build aprovado e 73 testes passaram, incluindo restauração, persistência, idempotência e bloqueio após encerrar.
 - Teste no navegador: pegar três peças habilitou o botão e reiniciar devolveu as três ao conjunto, sem mudar de jogador.
 
+
+## 27/10/2026 — Partidas de 2, 3 e 4 jogadores e encerramento pelo host
+- Configuração de lugares na criação e preparação, assentos privados corretos e presença SSE para até quatro pessoas.
+- Ordem circular a partir de qualquer primeiro jogador; gatilhos normais completam a rodada para todos terem o mesmo número de turnos.
+- Seletor para consultar qualquer tabuleiro; edição somente no próprio turno e no próprio tabuleiro.
+- Host pode encerrar mediante confirmação, inclusive fora de seu turno. Turno incompleto desfeito; placar parcial, sem vencedor oficial, sem retomada.
+- Compatibilidade com salas antigas de dois jogadores e com Pulsar.
+- Build TypeScript/Vite aprovado; 129 testes passaram, incluindo partidas integrais, todos os primeiros jogadores, todos os assentos disparando fim, quatro sessões HTTP/SSE e persistência.
+- Navegador: criação e início de sala com quatro lugares; consulta ao quarto tabuleiro; cancelar e confirmar encerramento. Em 390 pixels, quatro participantes visíveis sem transbordamento da página. Nenhuma jogada efetuada na sala real do usuário.
+
