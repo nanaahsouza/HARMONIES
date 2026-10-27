@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: harmonies-online
+    runtime: docker
+    plan: starter
+    numInstances: 1
+    healthCheckPath: /api/health
+    disk:
+      name: harmonies-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: DATABASE_PATH
+        value: /var/data/harmonies.sqlite
+      - key: PORT
+        value: "3001"
+      - key: PUBLIC_ORIGIN
+        sync: false
