@@ -146,3 +146,94 @@ Executados70 testes (55 anteriores +15 Pulsar), todos aprovados, e build TypeScr
 - Build TypeScript/Vite aprovado; 129 testes passaram, incluindo partidas integrais, todos os primeiros jogadores, todos os assentos disparando fim, quatro sessões HTTP/SSE e persistência.
 - Navegador: criação e início de sala com quatro lugares; consulta ao quarto tabuleiro; cancelar e confirmar encerramento. Em 390 pixels, quatro participantes visíveis sem transbordamento da página. Nenhuma jogada efetuada na sala real do usuário.
 
+
+## 28/10/2026 — Prévia local: mesa completa sem troca de tabuleiro
+- Todos os jogadores renderizados juntos, com cartas e tabuleiros independentes; removido o seletor de visualização.
+- Barra superior e painéis compactados; escala ajustada ao espaço disponível por ResizeObserver, sem mudar coordenadas das peças.
+- Corrigida regra de grid-area herdada que sobrepunha as áreas pessoais; cada painel ocupa sua própria coluna.
+- Build TypeScript/Vite aprovado. Em 1280x720, os quatro tabuleiros têm coordenadas horizontais distintas e cabem na altura; em 390x844, os dois tabuleiros aparecem simultaneamente sem transbordamento.
+- Conferidas seleção, colocação de peça no tabuleiro correto e reinício do turno em sala de teste; nenhuma jogada alterada em sala real.
+- Alterações mantidas somente no computador para teste. Nenhum commit ou envio ao GitHub nesta alteração.
+
+
+## 28/10/2026 — Proporção das cartas e mão junto ao tabuleiro (somente local)
+- Quatro espaços proporcionais de habitats acima de cada paisagem, conforme referência enviada; cartas completas em miniaturas separadas.
+- Peças da mão posicionadas em coluna à direita do tabuleiro do jogador da vez, com seleção restrita ao dono.
+- Removida a mão do tabuleiro central. Mesas continuam juntas, com ajuste ao tamanho da janela.
+- Build aprovado; teste no navegador confirmou três peças na lateral, seleção, colocação na célula correta e restauração pelo reinício do turno. Em 1280x720, sem rolagem da página.
+- Nenhum envio ao GitHub.
+
+
+## 28/10/2026 — Painel de vez ao lado dos conjuntos (local)
+- Lista de participantes à direita da reserva, com avatar, presença e destaques Jogando agora/A seguir/Aguardando.
+- O jogador atual e o próximo são derivados do turno autoritativo recebido pelo SSE; partidas encerradas não destacam turno ativo.
+- Build aprovado. Conferência no navegador confirmou painel à direita, jogador atual correto e mesa sem rolagem em 1280x720.
+- Nenhum envio ao GitHub.
+
+
+## 28/10/2026 — Fundo bege unificado (local)
+- Aplicado o tom da área dos tabuleiros ao fundo da página, cabeçalho, barra da sala, turno, oferta, conjuntos, participantes e diálogos.
+- Destaques de turno e seleção preservados. Build aprovado e conferência visual no navegador.
+- Nenhum envio ao GitHub.
+
+
+## 28/10/2026 — Oferta ampliada no computador (local)
+- Cartas disponíveis, botões de pegar carta, peças e reserva central ampliados na versão para computador.
+- Espaço da mesa distribuído conforme a altura disponível, mantendo as áreas pessoais visíveis e a proporção entre suas cartas e paisagem.
+- Build aprovado. Em 1280x720, cartas disponíveis com cerca de 91px de largura (antes cerca de 53px) e reserva com cerca de 169px (antes cerca de 110px); todos os tabuleiros visíveis e sem rolagem vertical.
+- Regras de layout do celular preservadas. Nenhum envio ao GitHub.
+
+
+## 28/10/2026 — Paleta da referência (local)
+- Café no fundo, creme nas superfícies, pêssego nos controles secundários e verde nos estados ativos e seleções.
+- Cores das ilustrações e peças preservadas. Paleta aplicada também à entrada, preparação e diálogos.
+- Build aprovado e conferência visual no navegador. Nenhum envio ao GitHub.
+
+
+### 28/10/2026 — Cenário e painéis inspirados na referência
+- Fundo original fornecido pelo usuário copiado sem alterações para public/assets/sunrise-landscape.png.
+- Painéis translúcidos em tons de pergaminho, identificação colorida na base de cada tabuleiro e lista de turnos em verde escuro.
+- Cartas, peças, coordenadas e regras preservadas. Alterações somente locais, sem publicação no GitHub.
+- Build TypeScript/Vite aprovado. Revisão no navegador em 1280x720 (2 e 4 jogadores) e 390x844 (4 jogadores), sem rolagem vertical e sem sobreposição dos tabuleiros.
+
+### 28/10/2026 — Painéis compactos
+- Oferta limitada à largura das cinco cartas e nomes dos animais removidos da mesa (identificação acessível preservada).
+- Removido painel lateral de ordem dos jogadores; indicação da vez permanece na faixa superior.
+- Barras de identificação abaixo dos tabuleiros acompanham o conteúdo, com margem para o ícone.
+- Build aprovado e visual conferido no navegador em 1280x720, sem rolagem vertical. Somente local.
+
+### 28/10/2026 — Escolha direta da carta
+- Carta disponível passa a executar takeCard ao clicar/toque na imagem; botão separado removido.
+- Brilho dourado no hover das cartas elegíveis e no foco de teclado, sem ampliação ou alteração da arte.
+- Bloqueios de turno, ação pendente, escolha já feita e limite de habitats preservados com botão nativo desabilitado.
+- Build aprovado. Testado clique direto, bloqueio das outras cartas e reinício do turno na sala de testes CIHWQXHIN2EK, restaurada após o teste. Somente local.
+
+28/10/2026: cartas disponíveis recebem elevação de 4px e zoom de 3,5% junto do brilho, com transição suave e respeito a movimento reduzido. Build e foco visual conferidos no navegador. Somente local.
+
+### 28/10/2026 — Estabilidade ao realizar ações
+- Aviso de ação não confirmada aparece apenas quando não há requisição em andamento, evitando inserção e remoção de faixa durante confirmação normal via SSE/HTTP.
+- act ignora chamadas enquanto busy. Preservados armazenamento de ação e reenvio em falhas.
+- Espaço de reposição usa a mesma proporção da carta; reserva não muda opacidade ao bloquear e ambos os painéis têm a mesma altura.
+- Build aprovado. Na sala de testes: pegar carta, pegar conjunto, selecionar e colocar peça, reiniciar turno. Altura dos dois painéis permaneceu 210,92px, posição da linha de tabuleiros 359,39px e escala 0,868098 antes/depois. Sala restaurada. Somente local.
+
+### 28/10/2026 — Tabuleiro de conjuntos inspirado na nova foto
+- SVG remodelado em proporção larga com cinco lóbulos, cinco bases de madeira, centro sem seta, pequenos motivos de folhas e textura de papel.
+- Conjuntos reposicionados sobre as cinco bases; contagem da bolsa fora do centro.
+- Build aprovado. Seleção do conjunto inferior e reinício do turno conferidos na sala de testes, restaurada após validação. Somente local, sem GitHub.
+
+### 28/10/2026 — Estabilidade na seleção do cubo de animal
+- Orientação do habitat passa a sobrepor a base decorativa do painel, sem aumentar sua altura ao selecionar ou remover a seleção.
+- Build aprovado. Sala de testes: pegar carta, selecionar cubo, cancelar e reiniciar turno. Escala 0,884375 e posição dos tabuleiros 353,36px permaneceram iguais antes, durante e após a seleção. Habitat de teste ainda incompleto: não foi realizado placeAnimal neste teste. Sala restaurada, mudanças somente locais.
+
+### 28/10/2026 — Hover dos controles sem redimensionamento
+- Estilos antigos de hover ampliavam o padding do botão de encerrar turno. Geometria dos três controles agora é explícita e igual nos estados normal, hover, foco e ativo; efeito restrito a cor/sombra.
+- Build aprovado. Hover real conferido nos botões Encerrar turno e Encerrar partida via clique direito e Escape, sem executar nenhuma ação da partida. Altura dos botões 31px, faixa 52,39px e escala da mesa 0,884375 permaneceram constantes. Somente local.
+
+### 28/10/2026 — Ficha ilustrada de pontuação
+- Substituída tabela resumida por ficha em papel bege, com peças ilustradas, seis categorias por jogador e total em faixa verde.
+- Modal nativo abre apenas ao encerrar a partida; pode ser fechado e reaberto para consultar os tabuleiros. Mantém resultado parcial sem vencedor quando host encerra antecipadamente.
+- Valores vêm diretamente do detalhamento do servidor, sem mudança de regras ou cálculos.
+- Build aprovado. Conferidos resultado normal de dois jogadores (somas 14 e 22), quatro jogadores, fechamento/reabertura e layout de celular 390x844. Somente local, sem GitHub.
+
+### 28/10/2026 — Versão autorizada para GitHub
+Usuário autorizou o envio da versão atual. Build e 129 testes aprovados. Envio inclui fonte, documentação e imagem de fundo utilizada; banco de partidas, dependências, build gerado e configurações privadas não fazem parte do repositório.

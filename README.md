@@ -28,7 +28,7 @@ Para desenvolver com recarga automática, rode `pnpm server` em um terminal e `p
 4. Os turnos seguem a ordem de entrada, a partir do primeiro jogador escolhido. Pegue três peças e coloque-as no tabuleiro. Cartas e animais podem ser escolhidos nos momentos permitidos.
 5. Para colocar um animal, toque na própria carta ou no cubo sobre ela e depois em um destino destacado no seu tabuleiro. O servidor valida o habitat e a orientação.
 6. Antes de encerrar, “Reiniciar meu turno” devolve as escolhas e colocações daquele turno. Depois de “Encerrar turno”, não é possível voltar.
-7. Use “Ver tabuleiro” para consultar qualquer participante. Somente o seu tabuleiro pode receber suas peças e cubos.
+7. Todos os tabuleiros e habitats aparecem juntos na mesa. A interface ajusta a escala ao espaço da janela, sem troca de jogador nem rolagem vertical da partida. Somente o seu tabuleiro pode receber suas peças e cubos.
 8. O fim normal ocorre por falta de peças na reposição ou por um tabuleiro com duas ou menos casas vazias. A rodada é completada para todos terem o mesmo número de turnos. Pontos e desempates são calculados para todos os participantes.
 9. O host tem o botão “Encerrar partida”, com confirmação. Ele encerra imediatamente, desfazendo o turno em andamento. O resultado é identificado como placar parcial, sem vencedor oficial, e a partida não pode continuar.
 
@@ -90,7 +90,7 @@ O runtime de Sites usa Cloudflare Workers. Esta entrega mantém a arquitetura No
 
 O manual normativo é o [manual BR oficial](https://cdn.svc.asmodee.net/production-libelludv2/uploads/2026/08/LIBELLUD_HARMONIES_RULES_BR_compressed.pdf), consultado em 26/10/2026. Os diagramas das páginas impressas 2–9 foram renderizados e inspecionados. A [FAQ da Libellud](https://www.libellud.com/game/harmonies/) esclarece rios circulares e cubos ilimitados por substitutos.
 
-Os 32 diagramas foram inspecionados na adaptação licenciada BGA, indicada pela Libellud. Seis foram cruzados também com manual/presskit da editora. Isso não equivale a confirmação individual das outras 26 no próprio manual: veja `docs/CARTAS.md`. Nomes não confirmados são rótulos descritivos; `officialName` permanece nulo. O motor usa somente os dados de padrões transcritos. Na atualização visual solicitada pelo usuário, o frontend passou a usar a imagem de cartas fornecida por ele, salva em public/assets/animal-cards.webp. O sprite é exibido por coordenadas CSS, somente nas 32 cartas do jogo-base; não foi incorporado código da adaptação BGA. Clique na carta para ampliá-la.
+Os 32 diagramas foram inspecionados na adaptação licenciada BGA, indicada pela Libellud. Seis foram cruzados também com manual/presskit da editora. Isso não equivale a confirmação individual das outras 26 no próprio manual: veja `docs/CARTAS.md`. Nomes não confirmados são rótulos descritivos; `officialName` permanece nulo. O motor usa somente os dados de padrões transcritos. Na atualização visual solicitada pelo usuário, o frontend passou a usar a imagem de cartas fornecida por ele, salva em public/assets/animal-cards.webp. O sprite é exibido por coordenadas CSS, somente nas 32 cartas do jogo-base; não foi incorporado código da adaptação BGA. Clique na carta disponível para pegá-la. Nas cartas do próprio habitat, o clique seleciona o cubo de animal; as demais cartas podem ser abertas para consulta.
 
 O manual confirma 66 cubos de animais e 4 de Espíritos da Natureza. A página comercial resume esses 70 cubos em conjunto. Somente animais entram neste escopo; a FAQ permite substitutos quando a reserva acaba, portanto não é criado limite artificial de 66 colocações.
 
@@ -99,3 +99,10 @@ Os testes de padrões verificam comportamento sobre as transcrições; não são
 ## Publicar
 
 Siga `docs/IMPLANTACAO.md`. A opção concreta é **Render Web Service Docker + disco persistente**, uma instância, servindo React e API sob o mesmo HTTPS. O plano com disco é pago; depende de conta e contratação pelo usuário. Depois de publicar, execute o roteiro em `docs/VALIDACAO.md` em dois dispositivos, um no Wi-Fi e outro em rede móvel.
+
+
+## Mesa e pontuação
+
+Todos os tabuleiros ficam visíveis na mesma página. As cartas de habitat aparecem acima de cada tabuleiro, com as peças da mão ao lado. A oferta de cartas e a reserva central ficam juntas na parte superior, sobre a paisagem de fundo fornecida pelo usuário.
+
+As cartas disponíveis têm brilho e elevação discretos ao passar o mouse. A seleção de peças, cubos e os controles de turno mantêm o tamanho da mesa estável. No fim da partida, uma ficha ilustrada mostra os pontos de árvores, montanhas, campos, construções, água e animais, além do total de cada jogador. É possível fechar a ficha para rever os tabuleiros e reabri-la depois.

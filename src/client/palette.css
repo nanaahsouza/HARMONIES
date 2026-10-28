@@ -1,0 +1,60 @@
+/* Paleta da referência: Milky Coffee, Roasted Peach, Cream e Kombu Green. */
+:root{--coffee:#a3886b;--peach:#dcac9b;--cream:#fedcaf;--kombu:#9cb6ad;--deep-green:#38594d;--ink:#493c32;--muted:#77634f;--line:#c8a98a;--accent:#38594d;background:var(--coffee);color:var(--ink)}
+body{background:var(--coffee);color:var(--ink)}
+header{background:#fedcafee;border-color:#8b715640}.wordmark{color:#3e342c}.wordmark span{color:#6d5c49}
+.eyebrow,.step{color:#78634e}.muted,.caption{color:#796651}
+.panel,.entrance,.verification{background:var(--cream);border-color:#b69776;box-shadow:0 3px 12px #49342612}
+button{background:var(--peach);color:#573d32;border-color:#bd9280}
+button:hover:enabled{background:#e7bfac;color:#49362d}
+.primary,.primary:hover:enabled{background:var(--kombu);color:#243d32}.primary:hover:enabled{background:#afc4bb}
+button:disabled,.primary:disabled{background:#e4c7a4;color:#8c735c;opacity:.75}
+input,select{background:#ffe8ca;color:var(--ink);border-color:#bea183}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline-color:#496e60a6}
+.text-button{color:var(--deep-green)}
+.welcome .intro h1{color:#fff0d9}.welcome .intro h1 em{color:#e0ece1}.welcome .intro>p:not(.eyebrow):not(.caption){color:#fff0d9}.welcome .intro .eyebrow,.welcome .intro .caption{color:#f9e3c6}
+.entrance h2,.lobby h1,.lobby h2,.verification h2{color:var(--ink)}
+.entrance label,.lobby label{color:#6d5743}.small-note,.development,.expansion-summary,.verification p,.verification li{color:#79624d}
+.expansion-setting{background:#efc8a3;border-color:#c7a581}.expansion-setting input{accent-color:var(--deep-green)}
+body:has(.table-fit),body:has(.table-fit) main{background:var(--coffee)}
+body:has(.table-fit) header,body:has(.table-fit) .room-bar{background:transparent}
+body:has(.table-fit) .room-code{color:#fff0da}
+body:has(.table-fit) .room-bar>button{color:#fff0da;background:#80674c55}
+body:has(.table-fit) .connection,body:has(.table-fit) .player-chip,body:has(.table-fit) .edition-badge{background:var(--cream);color:#6b5845;box-shadow:inset 0 0 0 1px #c7a583}
+body:has(.table-fit) .connection.online i,body:has(.table-fit) .players .dot.on{background:#527c65}
+body:has(.table-fit) .turn-bar,.table-stage .game-workspace .revealed-panel,.table-stage .game-workspace .market-panel,.table-stage .game-workspace .turn-roster,.table-stage .game-workspace .player-table.personal-area,.table-stage .game-workspace .player-table.own-table,.table-stage .results{background:var(--cream);border-color:#caaa85;box-shadow:0 3px 9px #4d362416}
+body:has(.table-fit) .turn-bar h2,.table-stage .results h2{color:var(--ink)}
+body:has(.table-fit) .turn-bar .eyebrow,.table-stage .game-workspace .revealed-panel>.eyebrow{color:#7e654c}
+body:has(.table-fit) .turn-stats>span{color:#80684f;border-color:#cfae87}.turn-stats b{color:#5d4b3a}
+body:has(.table-fit) .turn-copy:before{background:var(--kombu);color:var(--deep-green)}
+body:has(.table-fit) .turn-bar .restart-turn{background:var(--peach);color:#5b3c30;border-color:#be927e}
+body:has(.table-fit) .turn-bar .restart-turn:disabled{background:#e7c6a5;color:#9b7c60}
+body:has(.table-fit) .turn-bar .primary{background:var(--kombu);color:#243d32}
+body:has(.table-fit) .turn-bar .primary:disabled{background:#dfc7a7;color:#9a7e62}
+body:has(.table-fit) .turn-bar .finish-game,.finish-game{background:#d3a08e;color:#633e32;border-color:#bd8b78}
+.table-stage .game-workspace .revealed-panel .animal-card>button:not(.card-art){background:var(--peach);color:#54392d;border-color:#b98f7b}
+.table-stage .game-workspace .revealed-panel .animal-card>button:not(.card-art):hover:enabled{background:#e7bdab}
+.table-stage .game-workspace .revealed-panel .animal-card>button:not(.card-art):disabled{background:#e3c19e;color:#967352}
+.table-stage .game-workspace .animal-card h3,.table-stage .game-workspace .market-panel>h2{color:#5c4837}
+.table-stage .game-workspace .collection .habitat-slot{background:linear-gradient(135deg,#ffe7c6,#f4d1a5);border-color:#c9ab83}
+.table-stage .game-workspace .revealed-panel .empty-card{background:#f4d1aa;border-color:#b89a75;color:#8b7257}
+.player-table-heading{color:#8b7054}.player-table-heading h2{color:#594331}.player-table-heading h2 span{color:var(--deep-green)}
+.table-stage .game-workspace .player-table.own-table{border-color:#638977}
+.table-stage .game-workspace .player-table.current-player{box-shadow:inset 0 3px var(--deep-green),0 3px 9px #4d362416}
+.table-stage .game-workspace .board-hand:has(button){background:#d7b18c}
+.table-stage .game-workspace .board-hand button{background:transparent}
+.table-stage .game-workspace .board-hand button.selected{background:var(--kombu);outline-color:var(--deep-green)}
+.table-stage .game-workspace .collection .card-art.animal-selected{outline-color:var(--deep-green)}
+.table-stage .game-workspace .board .cell.legal>polygon{stroke:#456f5a;fill:#9cb6ad66}
+.table-stage .game-workspace .board-reference .cell:focus-visible>polygon{stroke:#456f5a}
+.table-stage .game-workspace .habitat-picker{background:#bfd0bb;color:#354f3f}.table-stage .game-workspace .habitat-picker p{color:#354f3f}.table-stage .game-workspace .habitat-picker button{background:transparent;color:#354f3f}
+.turn-roster h2,.roster-player-copy strong{color:#574232}.turn-roster .roster-current{color:#84694e}
+.turn-roster .roster-player{background:#efd0ab}.turn-roster .roster-active{background:var(--kombu);box-shadow:inset 0 0 0 1px #678a78}
+.roster-player-copy>span,.roster-player-copy strong small{color:#8b6b4c}.roster-active .roster-player-copy>span,.roster-active .roster-player-copy strong,.roster-active .roster-player-copy strong small{color:#294b3b}
+.roster-connection{background:#bc9d7a}.roster-connection.online{background:#456e56}
+.table-stage .game-workspace .player-final-score{background:var(--kombu);color:#385244}.player-final-score strong,.results td strong{color:#385244}
+.table-stage .results th,.table-stage .results td{border-color:#ceb08b;color:#6b513b}
+body:has(.table-fit) .finish-dialog,body:has(.table-fit) .card-dialog{background:var(--cream);color:var(--ink)}
+.finish-dialog p,.card-explanation p{color:#7b6147}.card-explanation h2{color:#574232}
+.close-card{background:var(--peach);color:#593e30}.close-card:hover:enabled{background:#e5bba8}
+.notice{background:#c0cdb6;color:#37523e;border-color:#79967d}.alert{background:#e4b4a0;color:#693b2e;border-color:#bc8e78}
+footer,footer a{color:#ffecd2}

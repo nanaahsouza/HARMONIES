@@ -1,18 +1,29 @@
-import React from 'react';
-const outline='M169 45C148 4 89 3 66 41C44 74 53 115 77 140L53 165C7 168-10 216 11 253C28 286 66 301 103 282L137 309C122 352 151 390 193 394C238 398 271 363 263 324L286 302L345 329L329 281C375 281 405 245 393 205C384 173 354 157 327 161L314 135C349 105 346 59 319 33C289 4 244 12 222 46Q194 41 169 45Z';
+import React,{useId} from 'react';
+
+// Cinco espaços arredondados, como a reserva física; as peças continuam interativas por cima.
+const outline='M182 48C159 12 109 14 80 33C49 52 49 91 65 116L47 143C15 147 4 175 10 204C16 237 49 257 83 250L113 242L174 275C167 306 191 337 226 344C269 353 304 330 308 297L308 276L350 246C382 258 420 243 435 217C454 183 436 147 403 137L370 129L353 104C373 75 359 36 330 16C299 -5 255 2 235 31L222 45Z';
+const wells=[[117,78],[297,64],[385,185],[242,284],[64,200]];
 export function MarketArt(){
- return <svg className="market-art" viewBox="0 0 400 400" aria-hidden="true"><defs>
- <clipPath id="market-outline"><path d={outline}/></clipPath>
- <radialGradient id="market-wood"><stop stopColor="#454138"/><stop offset="1" stopColor="#252923"/></radialGradient>
- <radialGradient id="market-well"><stop offset="0" stopColor="#c7ae72"/><stop offset=".78" stopColor="#b59a63"/><stop offset="1" stopColor="#9a835800"/></radialGradient>
- <pattern id="market-leaves" width="73" height="67" patternUnits="userSpaceOnUse"><g fill="#c4ad75" opacity=".65"><path d="M8 8q12 1 9 12Q7 18 8 8m43 22q-12 3-8 12 10-2 8-12M29 51l5 9 5-8Z"/><path d="m16 35 5-3 3 6-5 3ZM60 52h4v8h-4Z"/><circle cx="37" cy="14" r="2"/><circle cx="40" cy="17" r="2"/><circle cx="35" cy="18" r="2"/></g><path d="M4 62q16-13 15-29M49 6q-9 17 2 27M25 9l4 5" fill="none" stroke="#141b16" strokeWidth=".8" opacity=".65"/></pattern>
- <pattern id="market-grain" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1m1 2h1" stroke="#e4d6ae" strokeOpacity=".09" strokeWidth=".5"/></pattern>
- </defs><path d={outline} fill="url(#market-wood)" stroke="#c1b18c" strokeWidth="1.4"/>
- <g clipPath="url(#market-outline)"><path d={outline} fill="url(#market-leaves)"/>{[[115,85],[282,80],[332,220],[205,330],[65,230]].map(([x,y],i)=><g key={i}><circle cx={x} cy={y} r="57" fill="url(#market-well)"/><path d={`M${x-38} ${y-47}q25 43 17 96m18-100q-5 43 22 90m-65-42 78-6`} fill="none" stroke="#3e392b" strokeWidth="1.5" opacity=".8"/><circle cx={x-20} cy={y+27} r="2" fill="#746139" opacity=".3"/><circle cx={x+17} cy={y+30} r="1" fill="#746139" opacity=".4"/></g>)}
- <path d="M319 308L191 244C158 230 153 206 166 185C180 161 213 158 234 179L326 297" fill="#887448" fillOpacity=".17" stroke="#d1b878" strokeWidth="1"/>
- <ellipse cx="197" cy="202" rx="26" ry="36" transform="rotate(-39 197 202)" fill="#1d241d" opacity=".9"/>
- <g transform="translate(195 200) rotate(-39)" fill="#b99f66"><path d="M-9-14h18v27H-9ZM-5-20H5v7H-5ZM-12-8h24v4h-24Z"/><path d="M-2-8h4v13h-4Z" fill="#f1dca5"/></g>
- <path d="m319 291 14 20-23-11Z" fill="#f6df9f"/><path d="m309 290 13 10m-10-14 13 10" stroke="#e5cd8e" strokeWidth="1.5"/>
- <path d={outline} fill="url(#market-grain)"/>
- </g></svg>;
+ const id=useId().replace(/:/g,'');
+ const ref=(name:string)=>`url(#${id}-${name})`;
+ return <svg className="market-art" viewBox="0 0 450 350" aria-hidden="true"><defs>
+  <clipPath id={`${id}-outline`}><path d={outline}/></clipPath>
+  <radialGradient id={`${id}-wood`} cx="45%" cy="38%" r="75%"><stop stopColor="#49422c"/><stop offset=".65" stopColor="#353223"/><stop offset="1" stopColor="#24271e"/></radialGradient>
+  <radialGradient id={`${id}-well`}><stop stopColor="#b79b62"/><stop offset=".74" stopColor="#a88e58"/><stop offset=".94" stopColor="#8b764c"/><stop offset="1" stopColor="#615438"/></radialGradient>
+  <pattern id={`${id}-leaves`} width="79" height="71" patternUnits="userSpaceOnUse"><g fill="#c7b37b" opacity=".52"><path d="M8 8q12 1 9 12Q7 18 8 8m43 22q-12 3-8 12 10-2 8-12M29 51l5 9 5-8Zm-13-16 5-3 3 6-5 3ZM60 52h4v8h-4Z"/><path d="M36 12q4-7 6-1 6-2 4 3 3 5-3 5-4 5-6 0-6-1-1-7Z"/></g><path d="M4 62q16-13 15-29M49 6q-9 17 2 27M25 9l4 5M65 25q7 18 2 31" fill="none" stroke="#151c15" strokeWidth=".8" opacity=".55"/></pattern>
+  <filter id={`${id}-paper`} x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".65" numOctaves="3" seed="17"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".13"/></feComponentTransfer><feBlend in="SourceGraphic" mode="soft-light"/></filter>
+ </defs>
+ <path d={outline} transform="translate(0 2)" fill="#171c17" opacity=".7"/>
+ <g clipPath={ref('outline')}>
+  <path d={outline} fill={ref('wood')}/>
+  <path d={outline} fill={ref('leaves')}/>
+  {wells.map(([x,y],i)=><g key={i}>
+   <circle cx={x} cy={y} r="61" fill={ref('well')} stroke="#27291d" strokeWidth="2"/>
+   <path d={`M${x-39} ${y-47}Q${x-12} ${y-4} ${x-31} ${y+49}M${x+3} ${y-58}Q${x+26} ${y+2} ${x+5} ${y+59}M${x+36} ${y-46}Q${x+49} ${y+1} ${x+34} ${y+46}`} fill="none" stroke="#4d432c" strokeWidth="1.8" opacity=".8"/>
+   {[[-28,21],[22,-33],[-13,-42],[37,25],[9,39]].map(([dx,dy],j)=><circle key={j} cx={x+dx} cy={y+dy} r={j%2?1.5:2.5} fill="#5e5033" opacity=".2"/>)}
+  </g>)}
+  <path d={outline} fill="transparent" filter={ref('paper')}/>
+ </g>
+ <path d={outline} fill="none" stroke="#887b57" strokeWidth="1.3"/>
+ </svg>;
 }

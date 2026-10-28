@@ -1,0 +1,136 @@
+/* Cenário fornecido pelo jogador; cartas e tabuleiros preservam suas artes. */
+body{background:#c6b475 url('/assets/sunrise-landscape.png') center center/cover fixed no-repeat}
+body:has(.table-fit){background:#c6b475 url('/assets/sunrise-landscape.png') center center/cover fixed no-repeat}
+body:has(.table-fit)::before{content:'';position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,#163e4138,transparent 48%,#193d442b);z-index:-1}
+body:has(.table-fit) #root{isolation:isolate}
+body:has(.table-fit) main{background:transparent;padding:0 16px 12px;gap:7px}
+body:has(.table-fit) header{padding:10px 18px 2px;background:transparent}
+body:has(.table-fit) header .wordmark{font-size:34px;font-weight:300;letter-spacing:.13em;text-transform:uppercase;color:#fff9e6;text-shadow:0 2px 3px #174c59,0 0 12px #174c5966}
+body:has(.table-fit) .room-bar{padding:2px 0}
+body:has(.table-fit) .room-code{color:#244c4c;text-shadow:0 1px #fff4d2}
+body:has(.table-fit) .connection,body:has(.table-fit) .player-chip,body:has(.table-fit) .edition-badge{background:#fff0cbdf;border:1px solid #fff3d6;color:#344e46;box-shadow:0 2px 8px #29463c20}
+body:has(.table-fit) .turn-bar{background:linear-gradient(110deg,#fff0cdeF,#f0d8a8e8);border:1px solid #fff4d6;border-radius:18px;box-shadow:0 4px 16px #20454b25;padding:8px 12px;backdrop-filter:blur(10px)}
+body:has(.table-fit) .turn-bar h2{color:#244951}
+body:has(.table-fit) .turn-copy:before{background:#254d55;color:#fff0c5;box-shadow:0 0 0 2px #fff1cf}
+body:has(.table-fit) .turn-bar .primary{background:#367569;color:#fff4d6;border:1px solid #23594f;border-radius:10px}
+body:has(.table-fit) .turn-bar .primary:disabled{background:#c8c3a1;color:#76785f;border-color:#b5b197}
+body:has(.table-fit) .turn-bar .restart-turn{background:#f1dfb7;color:#49594a;border-color:#b4ac83;border-radius:10px}
+body:has(.table-fit) .turn-bar .finish-game{background:#a9504e;color:#fff1df;border-color:#984846;border-radius:10px}
+.table-stage .game-workspace .revealed-panel,.table-stage .game-workspace .market-panel{background:linear-gradient(135deg,#f8e7b9bd,#e3c88a9c);border:1px solid #fff0c4b0;box-shadow:0 4px 16px #234c4524;backdrop-filter:blur(7px);border-radius:16px}
+.table-stage .game-workspace .revealed-panel>.eyebrow,.table-stage .game-workspace .market-panel>h2{color:#304f45;text-shadow:0 1px #fff0c688}
+.table-stage .game-workspace .revealed-panel .animal-card>button:not(.card-art){background:#fff0ccdf;color:#2d584f;border-color:#c6b585;border-radius:7px}
+.table-stage .game-workspace .revealed-panel .animal-card>button:not(.card-art):hover:enabled{background:#fff6dd}
+.table-stage .game-workspace .revealed-panel .animal-card>button:not(.card-art):disabled{background:#e5d5ad;color:#857c61}
+.table-stage .game-workspace .player-table.personal-area{--player-band:#a94c4f;--player-dark:#75383e;background:linear-gradient(135deg,#f5e3b4c2,#e6ca8e9c);border:1px solid #7e8053;border-radius:17px;padding:8px 8px 5px;box-shadow:inset 0 0 0 2px #fff1c66b,0 5px 20px #264b4526;backdrop-filter:blur(5px);gap:0}
+.table-stage .game-workspace .player-table.personal-area:nth-child(2){--player-band:#477c65;--player-dark:#2b5747}
+.table-stage .game-workspace .player-table.personal-area:nth-child(3){--player-band:#416ca0;--player-dark:#294875}
+.table-stage .game-workspace .player-table.personal-area:nth-child(4){--player-band:#af8742;--player-dark:#7d5f2d}
+.table-stage .game-workspace .player-table.current-player{border-color:#fff3c4;box-shadow:inset 0 0 0 2px #fff3b5,0 5px 20px #264b4533}
+.table-stage .game-workspace .player-table .collection{order:0;background:transparent}
+.table-stage .game-workspace .player-table .habitat-picker{order:1}
+.table-stage .game-workspace .player-table .landscape-panel{order:2;background:transparent}
+.table-stage .game-workspace .player-table .player-table-heading{order:3;display:flex;align-items:center;justify-content:center;position:relative;min-height:30px;width:78%;align-self:center;margin:1px 0 0;padding:4px 12px 4px 32px;border-radius:24px;background:linear-gradient(90deg,var(--player-dark),var(--player-band));border:1px solid #fff1c7b0;box-shadow:0 2px 4px #3a462735;gap:8px;color:#fff3dc}
+.table-stage .game-workspace .player-table .player-table-heading:before{content:'❧';position:absolute;left:-2px;top:-2px;width:31px;height:31px;display:grid;place-items:center;border-radius:50%;background:var(--player-dark);border:2px solid #e7cf9d;color:#fff0c8;font-size:24px;line-height:1}
+.table-stage .game-workspace .player-table-heading h2{color:#fff6e6;font-size:12px;font-weight:600;text-shadow:0 1px #203f4533;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.table-stage .game-workspace .player-table-heading h2 span{color:#fff0c6;font-size:8px}
+.table-stage .game-workspace .player-table-heading>span{color:#fff0cc;font-size:8px;white-space:nowrap}
+.table-stage .game-workspace .player-table .completed-habitats{order:4}
+.table-stage .game-workspace .collection .habitat-slot{background:linear-gradient(135deg,#fff0cc80,#f3dfb04a);border:1px dashed #fff3d0;border-radius:7px;box-shadow:inset 0 0 0 3px #e8d3a35c}
+.table-stage .game-workspace .board-hand:has(button){background:#fae8a6a8;border:1px solid #fff1bb88;border-radius:18px}
+.table-stage .game-workspace .turn-roster{background:#244a4ce8;border:1px solid #d7cfaa;border-radius:16px;box-shadow:0 4px 16px #234c4533;backdrop-filter:blur(8px)}
+.table-stage .game-workspace .turn-roster h2{color:#fff0ce}
+.table-stage .game-workspace .turn-roster .roster-current{color:#e6dcbe}
+.table-stage .game-workspace .turn-roster .roster-player{background:#ffffff12;border-left-color:var(--seat-color)}
+.table-stage .game-workspace .turn-roster .roster-active{background:#f7e4b4;box-shadow:0 0 0 1px #fff2c9}
+.table-stage .game-workspace .turn-roster .roster-player-copy strong{color:#fff3da}
+.table-stage .game-workspace .turn-roster .roster-player-copy>span,.table-stage .game-workspace .turn-roster .roster-player-copy small{color:#c3d3c6}
+.table-stage .game-workspace .turn-roster .roster-active .roster-player-copy strong,.table-stage .game-workspace .turn-roster .roster-active .roster-player-copy>span,.table-stage .game-workspace .turn-roster .roster-active .roster-player-copy small{color:#285248}
+.table-stage .results{background:#f8e8c6ef;border-color:#fff4d3;border-radius:16px}
+@media(max-width:800px){body:has(.table-fit) header{padding:7px 9px 2px}body:has(.table-fit) header .wordmark{font-size:24px}body:has(.table-fit) main{padding:0 6px 6px;gap:4px}.table-stage .game-workspace .player-table.personal-area{padding:5px}.table-stage .game-workspace .player-table .player-table-heading{width:88%}}
+@media(prefers-reduced-transparency:reduce){.table-stage .game-workspace .player-table.personal-area,.table-stage .game-workspace .revealed-panel,.table-stage .game-workspace .market-panel{background:#ebd4a4}}
+/* Oferta acompanha apenas as cinco cartas, sem painel lateral de turnos. */
+.table-stage .game-grid.game-workspace{grid-template-columns:max-content var(--supply-size,170px);grid-template-areas:"offer supply" "personal personal";justify-content:center}
+.table-stage .game-workspace .revealed-panel{width:max-content;max-width:100%;align-self:start;justify-self:start}
+.table-stage .game-workspace .revealed-panel .cards{grid-template-columns:repeat(5,var(--shared-card-width,70px))}
+.table-stage .game-workspace .market-panel{align-self:start}
+.table-stage .game-workspace .player-table .player-table-heading{width:fit-content;max-width:90%;min-height:25px;padding:3px 13px 3px 27px;margin:3px 0 0;gap:6px}
+.table-stage .game-workspace .player-table .player-table-heading:before{width:25px;height:25px;font-size:19px;top:-1px;left:-2px}
+.table-stage .game-workspace .player-table-heading h2{font-size:12px;line-height:18px;margin:0}
+.table-stage .game-workspace .player-table-heading>span{display:none}
+.table-stage .game-workspace .player-table.current-player .player-table-heading>span{display:inline;font-size:8px}
+@media(max-width:800px){.table-stage .game-grid.game-workspace{grid-template-columns:max-content 170px}.table-stage .game-workspace .revealed-panel .cards{grid-template-columns:repeat(5,70px)}}
+.table-stage .game-grid.game-workspace{grid-template-columns:minmax(0,1fr) max-content var(--supply-size,170px) minmax(0,1fr);grid-template-areas:". offer supply ." "personal personal personal personal"}
+.table-stage .game-workspace .player-table .player-table-heading{padding-left:35px}
+@media(max-width:800px){.table-stage .game-grid.game-workspace{grid-template-columns:minmax(0,1fr) max-content 170px minmax(0,1fr)}}
+/* A própria carta é o alvo para escolher um habitat. */
+.table-stage .game-workspace .revealed-panel .card-art{transition:box-shadow .16s ease,border-color .16s ease;cursor:pointer}
+.table-stage .game-workspace .revealed-panel .card-art:disabled{opacity:1;cursor:default;filter:none}
+.table-stage .game-workspace .revealed-panel .card-art:hover:enabled,.table-stage .game-workspace .revealed-panel .card-art:focus-visible{border-color:#fff7bc;box-shadow:0 0 0 2px #ffe89b,0 0 15px 4px #fff0a4cc,0 4px 8px #304a3b40;outline:none;transform:none}
+@media(prefers-reduced-motion:reduce){.table-stage .game-workspace .revealed-panel .card-art{transition:none}}
+/* Realce discreto da carta disponível, sem deslocar as vizinhas. */
+.table-stage .game-workspace .revealed-panel .card-art{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;transform-origin:center bottom;position:relative}
+.table-stage .game-workspace .revealed-panel .card-art:hover:enabled,.table-stage .game-workspace .revealed-panel .card-art:focus-visible{transform:translateY(-4px) scale(1.035);z-index:2}
+@media(prefers-reduced-motion:reduce){.table-stage .game-workspace .revealed-panel .card-art{transition:none}.table-stage .game-workspace .revealed-panel .card-art:hover:enabled,.table-stage .game-workspace .revealed-panel .card-art:focus-visible{transform:none}}
+/* Mantém a reserva e as cartas alinhadas, inclusive durante uma escolha. */
+.table-stage .game-workspace .market-panel,.table-stage .game-workspace .revealed-panel{align-self:stretch}
+.table-stage .game-workspace .revealed-panel .empty-card{width:100%;height:auto;min-height:0;aspect-ratio:25/43;box-sizing:border-box;display:grid;place-items:center;padding:6px;text-align:center;font-size:10px}
+.table-stage .game-workspace .sculpted-market .token-group:disabled{opacity:1}
+/* Reserva larga com cinco lóbulos, sem a seta central. */
+.table-stage .game-workspace .market.sculpted-market{aspect-ratio:450/350;margin:8px auto 0}
+.table-stage .game-workspace .sculpted-market .token-group:nth-of-type(1){left:26%;top:22.3%}
+.table-stage .game-workspace .sculpted-market .token-group:nth-of-type(2){left:66%;top:18.3%}
+.table-stage .game-workspace .sculpted-market .token-group:nth-of-type(3){left:85.5%;top:52.8%}
+.table-stage .game-workspace .sculpted-market .token-group:nth-of-type(4){left:53.8%;top:81.1%}
+.table-stage .game-workspace .sculpted-market .token-group:nth-of-type(5){left:14.2%;top:57.1%}
+.table-stage .game-workspace .sculpted-market .token-group{width:29%;height:34%;padding:0}
+.table-stage .game-workspace .market-bag-count{left:auto;right:0;top:auto;bottom:-5px;transform:none;background:#f6e6badb;color:#4a513b;border:1px solid #ac9b70;border-radius:9px;padding:4px 6px;min-width:0}
+.table-stage .game-workspace .market-bag-count small{color:#6d7053}
+/* A orientação do cubo sobrepõe a base decorativa sem redimensionar a mesa. */
+.table-stage .game-workspace .player-table .habitat-picker{position:absolute;left:8px;right:8px;bottom:37px;z-index:3;margin:0;padding:5px 7px;min-height:26px;box-sizing:border-box;flex-wrap:nowrap;box-shadow:0 2px 8px #274a3933;background:#f8e8c9f5;border:1px solid #c3b187}
+.table-stage .game-workspace .player-table .habitat-picker p{min-width:0;font-size:9px;line-height:1.25}
+.table-stage .game-workspace .player-table .habitat-picker button{flex-shrink:0}
+/* Botões do turno têm a mesma geometria em todos os estados. */
+body:has(.table-fit) #root main .turn-bar>button,
+body:has(.table-fit) #root main .turn-bar>button:hover,
+body:has(.table-fit) #root main .turn-bar>button:focus-visible,
+body:has(.table-fit) #root main .turn-bar>button:active{box-sizing:border-box;height:31px;min-height:31px;padding:5px 9px;border-width:1px;border-style:solid;font-size:10px;line-height:19px;white-space:nowrap;transform:none;transition:background-color .15s ease,color .15s ease,box-shadow .15s ease}
+body:has(.table-fit) #root main .turn-bar>.primary:hover:enabled{background:#428575;color:#fff4d6;box-shadow:0 0 0 2px #36756922}
+body:has(.table-fit) #root main .turn-bar>.finish-game:hover:enabled{background:#b75d59;color:#fff1df;box-shadow:0 0 0 2px #a9504e22}
+@media(max-width:800px){body:has(.table-fit) #root main .turn-bar>button,body:has(.table-fit) #root main .turn-bar>button:hover,body:has(.table-fit) #root main .turn-bar>button:focus-visible,body:has(.table-fit) #root main .turn-bar>button:active{height:29px;min-height:29px;padding:4px 6px;font-size:9px;line-height:19px}}
+/* Ficha de pontuação final, inspirada no bloco físico de papel. */
+.score-reopen{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0;padding:4px 10px;border-radius:10px;background:#f7e8c9d9;color:#38594d;font-size:12px}
+.score-reopen button{font-size:11px;padding:6px 12px;background:#38695c;color:#fff4dd}
+.score-sheet{width:min(780px,calc(100vw - 28px));max-height:calc(100dvh - 36px);padding:25px 28px;border:1px solid #d6b987;border-radius:20px;background:radial-gradient(ellipse at 0 0,#fff9e5b0,transparent 70%),repeating-linear-gradient(5deg,#9a774b04 0px,#9a774b04 1px,transparent 1px,transparent 4px),#f3e1bc;color:#4e4b36;box-shadow:0 25px 90px #152e4266;overflow:auto}
+.score-sheet::backdrop{background:#183e4b88;backdrop-filter:blur(7px)}
+.score-sheet-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.score-sheet-header .eyebrow{font:600 10px/1.4 system-ui;letter-spacing:2px;color:#84764e;margin:0 0 7px}
+.score-sheet h2{font:500 32px/1.1 Georgia,serif;color:#38594d;margin:0}
+.score-sheet .score-close{display:grid;place-items:center;width:32px;height:32px;min-width:32px;padding:0;border:1px solid #baa781;border-radius:50%;background:#fff4d5;color:#566348;font:24px/1 system-ui}
+.score-intro{font-size:12px;line-height:1.6;color:#797151;margin:12px 0 15px}
+.score-table-wrap{overflow-x:auto;border:1px solid #c7b389;border-radius:12px;background:#fff5dd45}
+.score-sheet table{border-collapse:collapse;width:100%;table-layout:fixed;font:14px/1.3 system-ui}
+.score-sheet caption{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.score-sheet th,.score-sheet td{padding:7px 9px;text-align:center;border-right:1px solid #bba57b66;border-bottom:1px solid #bba57b66;color:#4e543f}
+.score-sheet th:last-child,.score-sheet td:last-child{border-right:0}
+.score-sheet thead{background:#e2cd9e55}
+.score-sheet thead th{font-weight:600;font-size:12px;overflow-wrap:anywhere;vertical-align:middle}
+.score-sheet thead th:first-child{width:28%;text-align:left;padding-left:14px}
+.score-sheet tbody th{text-align:left;font-weight:500;font-size:12px}
+.score-sheet tbody td{font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
+.score-category{display:flex;align-items:center;gap:8px}
+.score-piece{display:grid;place-items:center;width:38px;height:33px;flex:0 0 38px}
+.score-piece>.piece-art{width:45px;height:39px;max-width:none}
+.score-piece>.gold-cube{width:25px;height:29px}
+.score-player-name{display:block;border-top:3px solid #ac5757;padding:7px 0 4px}.score-seat-1{border-color:#558068}.score-seat-2{border-color:#5276a2}.score-seat-3{border-color:#b3924d}
+.score-winner{display:block;font-size:9px;letter-spacing:1px;color:#7f6a32;font-weight:500}
+.score-sheet tfoot{background:#38594d}
+.score-sheet tfoot th,.score-sheet tfoot td{color:#fff2cc;border-bottom:0;border-right-color:#f8e9c533;padding:12px 8px}
+.score-sheet tfoot th{font-size:13px;letter-spacing:2px;text-align:left;padding-left:15px}
+.score-sheet tfoot strong{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums}
+.score-sheet tfoot small{display:block;font-size:9px;color:#dbdfc4;margin-top:2px}
+.score-sheet-footer{margin-top:13px;font-size:11px;color:#7b755d;text-align:center}
+.score-sheet-footer>span{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;line-height:1.5}
+.score-sheet-footer .gold-cube{width:16px;height:19px;flex-shrink:0}
+.score-sheet-footer p{font-size:10px;margin:4px 0 13px}
+.score-sheet-footer .primary{background:#38594d;color:#fff1d0;border:1px solid #294d3f;padding:9px 22px;font-size:12px}
+@media(max-width:600px){.score-sheet{padding:18px 12px;border-radius:15px}.score-sheet h2{font-size:27px}.score-sheet-header .eyebrow{font-size:8px;letter-spacing:1px}.score-sheet th,.score-sheet td{padding:7px 3px}.score-sheet thead th{font-size:10px}.score-sheet thead th:first-child{width:29%;padding-left:6px}.score-sheet tbody th{font-size:10px}.score-category{gap:2px;flex-direction:column;align-items:center;text-align:center}.score-piece{height:28px}.score-piece>.piece-art{width:37px;height:33px}.score-sheet tbody td{font-size:18px}.score-sheet tfoot th{font-size:10px;letter-spacing:1px;padding-left:6px}.score-sheet tfoot strong{font-size:24px}.score-reopen{font-size:10px}}
