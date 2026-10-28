@@ -1,0 +1,120 @@
+/* Mesa inspirada na referência: coluna da partida, controles soltos e vidro claro. */
+body:has(.table-fit) header{padding:12px 24px 0}
+body:has(.table-fit) header .connection{background:#fff6d6cc;color:#335953}
+body:has(.table-fit) main{padding:0 24px 15px;gap:10px}
+body:has(.table-fit) .room-bar{display:none}
+body:has(.table-fit) #root main .turn-bar{background:transparent;border:0;box-shadow:none;backdrop-filter:none;padding:0;margin:0;min-height:37px;display:flex;justify-content:flex-end;gap:12px}
+body:has(.table-fit) .turn-bar>.turn-copy,body:has(.table-fit) .turn-bar>.turn-stats{display:none}
+body:has(.table-fit) #root main .turn-bar>button,
+body:has(.table-fit) #root main .turn-bar>button:hover,
+body:has(.table-fit) #root main .turn-bar>button:focus-visible,
+body:has(.table-fit) #root main .turn-bar>button:active{height:37px;min-height:37px;padding:7px 20px;border:1px solid #fff1c39e;border-radius:28px;background:linear-gradient(135deg,#fff3cfeF,#ebdeb1ec);font:600 13px/21px system-ui;letter-spacing:.2px;box-shadow:0 4px 8px #53563338,inset 0 1px #fff9e3;transform:none;transition:background-color .15s,color .15s,box-shadow .15s}
+body:has(.table-fit) #root main .turn-bar>.restart-turn{color:#3e5189}
+body:has(.table-fit) #root main .turn-bar>.primary{color:#b47729}
+body:has(.table-fit) #root main .turn-bar>.finish-game{color:#773f3e}
+body:has(.table-fit) #root main .turn-bar>button:hover:enabled{background:#fff6db;box-shadow:0 4px 10px #53563344,inset 0 1px #fff9e3}
+body:has(.table-fit) #root main .turn-bar>button:disabled{background:#f2e4bbcc;color:#99917c;opacity:1;box-shadow:0 2px 5px #53563322}
+.table-stage .game-grid.game-workspace{grid-template-columns:210px minmax(0,1fr) var(--supply-size,180px);grid-template-areas:"overview offer supply" "overview personal personal";gap:12px;align-items:start}
+.table-stage .game-workspace .match-overview{grid-area:overview;align-self:start;padding:18px 15px 15px;min-width:0;border:1px solid #fff4d39c;border-radius:24px;background:linear-gradient(135deg,#fff1cfe6,#eee3bdcc);box-shadow:0 5px 17px #294c392f;backdrop-filter:blur(8px);color:#315651}
+.match-code{display:flex;align-items:center;gap:7px;justify-content:space-between;margin-bottom:11px;font:500 9px/1.4 system-ui;letter-spacing:.6px;color:#7d8b7b}
+.match-code>span{overflow-wrap:anywhere}
+.match-code>button{background:none;color:#5a7772;border:0;padding:0;width:24px;min-width:24px;height:23px;font:19px/1 system-ui;box-shadow:none;transform:none}
+.match-overview h2{font:650 17px/1.3 system-ui;color:#16464c;letter-spacing:-.3px;margin:0 0 9px;overflow-wrap:anywhere}
+.match-guidance{font:11px/1.5 system-ui;color:#688079;margin:0 0 14px}
+.match-roster{list-style:none;display:flex;flex-direction:column;gap:7px;padding:0;margin:0}
+.match-roster>li{display:flex;align-items:center;gap:10px;min-width:0;padding:8px 6px;border-radius:16px}
+.match-roster>li.playing-now{background:#c8d5a7b3;box-shadow:inset 0 0 0 1px #c0ce9a44}
+.match-avatar{width:37px;height:37px;flex:0 0 37px;display:grid;place-items:center;border-radius:50%;background:#35717b;color:#fff5d7;font:600 18px system-ui;overflow:hidden}
+.match-avatar img{width:100%;height:100%;object-fit:cover}
+.avatar-seat-1{background:#3f8d9f}.avatar-seat-2{background:#a28061}.avatar-seat-3{background:#748955}
+.match-person{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.match-person strong{font:600 11px/1.3 system-ui;color:#245254;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.match-person small{font:10px/1.3 system-ui;color:#7a8a78}
+.playing-now .match-person small{color:#355b46}
+.host-mark{color:#be8c30;font-size:16px;margin-left:6px;font-weight:400}
+.match-presence{width:5px;height:5px;flex:0 0 5px;background:#b5b49c;border-radius:50%}
+.match-presence.present{background:#61916b}
+.match-edition{margin-top:14px;padding-top:12px;border-top:1px solid #9b9d6c35;display:flex;flex-direction:column;gap:4px;font:9px/1.4 system-ui;color:#74816d}
+.match-counts{display:flex;flex-direction:column;gap:3px;margin-top:8px;font:9px/1.5 system-ui;color:#75846f}
+.match-counts b{color:#426957;font-weight:600}
+.match-home{display:inline-block;margin-top:13px;font:600 10px/1.4 system-ui;color:#4c6b60;text-decoration:none}
+.match-home:hover{text-decoration:underline}
+.table-stage .game-workspace .revealed-panel,.table-stage .game-workspace .market-panel,.table-stage .game-workspace .player-table.personal-area{background:linear-gradient(135deg,#fff1cfe0,#eee3bdba);border:1px solid #fff4d3a6;border-radius:24px;box-shadow:0 5px 17px #294c392f;backdrop-filter:blur(5px)}
+.table-stage .game-workspace .revealed-panel{width:100%;max-width:none;align-self:stretch;padding:12px!important}
+.table-stage .game-workspace .revealed-panel .cards{grid-template-columns:repeat(5,minmax(0,var(--shared-card-width,78px)));gap:7px;justify-content:center}
+.table-stage .game-workspace .revealed-panel>.eyebrow{color:#77856c;font-size:9px;margin-bottom:8px}
+.table-stage .game-workspace .market-panel{align-self:stretch;padding:12px!important}
+.table-stage .game-workspace .market-panel>h2{font:600 12px/1.4 system-ui;color:#63745c;margin:0 0 9px}
+.table-stage .game-workspace .player-table.personal-area{padding:9px 9px 6px}
+.table-stage .game-workspace .player-table.current-player{border-color:#fff8dc;box-shadow:0 5px 17px #294c392f,inset 0 0 0 1px #fff5c688}
+.table-stage .all-players{gap:12px}
+@media(min-width:801px){.table-stage{--shared-card-width:clamp(76px,calc(var(--table-height,600px)*.17),108px);--supply-size:calc(var(--shared-card-width)*1.65 + 30px);--shared-height:calc(var(--shared-card-width)*1.72 + 45px)}.table-stage .all-players{grid-template-columns:repeat(var(--player-count),minmax(0,min(var(--personal-width),calc((100% - (var(--player-count) - 1)*12px)/var(--player-count)))));justify-content:center}}
+@media(max-width:800px){body:has(.table-fit) header{padding:9px 10px 0}body:has(.table-fit) main{padding:0 7px 7px;gap:7px}body:has(.table-fit) #root main .turn-bar{flex-wrap:nowrap;gap:5px;min-height:31px}body:has(.table-fit) #root main .turn-bar>button,body:has(.table-fit) #root main .turn-bar>button:hover,body:has(.table-fit) #root main .turn-bar>button:active,body:has(.table-fit) #root main .turn-bar>button:focus-visible{height:31px;min-height:31px;padding:5px 6px;font-size:9px;line-height:19px;flex:1!important}.table-stage .game-grid.game-workspace{grid-template-columns:minmax(0,1fr) 170px;grid-template-areas:"overview overview" "offer supply" "personal personal";gap:8px}.table-stage .game-workspace .match-overview{display:grid;grid-template-columns:1fr 1.5fr;gap:5px 15px;padding:12px 15px;border-radius:18px}.match-code{grid-column:1;margin:0}.match-overview h2{grid-column:1;font-size:15px;margin:0}.match-guidance{grid-column:1;font-size:10px;margin:0}.match-roster{grid-column:2;grid-row:1/5;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.match-roster>li{padding:5px;gap:5px}.match-avatar{width:27px;height:27px;flex-basis:27px;font-size:13px}.match-person strong{font-size:10px}.match-person small{font-size:9px}.host-mark{font-size:11px;margin-left:3px}.match-edition{grid-column:1;margin:0;padding:0;border:0;flex-direction:row;gap:6px;font-size:8px}.match-counts{display:none}.match-home{grid-column:1;margin:0;font-size:9px}.table-stage .game-workspace .revealed-panel,.table-stage .game-workspace .market-panel{padding:8px!important;border-radius:18px}.table-stage .game-workspace .revealed-panel .cards{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}.table-stage .game-workspace .player-table.personal-area{border-radius:18px;padding:6px}.table-stage .all-players{gap:8px}}
+/* Oferta com largura apenas para cinco cartas e reserva encostada ao lado. */
+@media(min-width:801px){.table-stage{--shared-card-width:clamp(60px,min(calc(var(--table-height,600px)*.17),calc((var(--table-width,1200px) - 300px)/7)),108px)}.table-stage .game-grid.game-workspace{grid-template-columns:210px max-content var(--supply-size,180px) minmax(0,1fr);grid-template-areas:"overview offer supply ." "overview personal personal personal"}.table-stage .game-workspace .revealed-panel{width:max-content;justify-self:start}.table-stage .game-workspace .revealed-panel .cards{grid-template-columns:repeat(5,var(--shared-card-width));justify-content:start}}
+.animal-avatar{display:inline-block;overflow:hidden;border-radius:50%;width:36px;height:36px;background:#ded6b6;flex-shrink:0;vertical-align:middle}
+.animal-avatar>img,.animal-avatar>svg{display:block;width:100%;height:100%;object-fit:cover}
+.avatar-picker-trigger{display:inline-flex;align-items:center;gap:9px;padding:5px 12px 5px 5px;border:1px solid #b4b696;border-radius:30px;background:#faf4df;color:#385d50;font:600 12px system-ui;transform:none}
+.avatar-picker-trigger:hover:enabled{background:#fff9e9;transform:none}
+.match-avatar .compact-avatar-picker{width:100%;height:100%;padding:0;border:0;border-radius:50%;background:transparent}
+.match-avatar .animal-avatar{width:100%;height:100%;border-radius:50%}
+.room-profile{display:flex;align-items:center;gap:13px;margin-bottom:16px;font:11px/1.4 system-ui;color:#586e59}
+.room-bar .player-chip .player-avatar{width:25px;height:25px;display:inline-block;margin-right:4px;padding:0;border:0}
+.table-stage .game-workspace .player-table .player-table-heading:before{display:none}
+.table-stage .game-workspace .player-table-heading .table-player-avatar{position:absolute;width:25px;height:25px;left:-2px;top:-1px;border:1px solid #f4e4bc}
+.avatar-dialog{width:min(440px,calc(100vw - 28px));padding:27px;border-radius:21px;border:1px solid #d8c9a7;background:#fff9eb;color:#35574c;box-shadow:0 20px 80px #264a4c66;max-height:calc(100dvh - 32px);overflow:auto}
+.avatar-dialog::backdrop{background:#163f4988;backdrop-filter:blur(6px)}
+.avatar-dialog h2{margin:0 0 10px;font:600 25px/1.3 system-ui;color:#2b5d55}
+.avatar-dialog p{font:12px/1.5 system-ui;color:#677665;margin:0 0 20px}
+.avatar-dialog-close{position:absolute;right:12px;top:10px;width:28px;height:28px;padding:0;background:transparent;color:#577566;border:0;font:24px/1 system-ui}
+.avatar-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.avatar-options button{display:flex;align-items:center;flex-direction:column;gap:7px;padding:8px 3px;background:#f0ebd9;border:1px solid transparent;border-radius:13px;color:#456454;font:11px system-ui;transform:none}
+.avatar-options button:hover:enabled{background:#e2e9d2;transform:none}
+.avatar-options button[aria-pressed=true]{background:#d8e6cc;border-color:#789c78;outline:none}
+.avatar-options .animal-avatar{width:58px;height:58px}
+.avatar-options small{font-size:8px;color:#5b7d58}
+@media(max-width:500px){.avatar-dialog{padding:25px 16px}.avatar-options{gap:5px}.avatar-options .animal-avatar{width:50px;height:50px}.room-profile{align-items:flex-start;flex-direction:column;gap:5px}}
+.table-stage .game-workspace .player-table-heading>.table-player-avatar{display:block}
+/* Bordas comuns nas duas linhas da mesa e reserva centralizada na janela. */
+@media(min-width:801px){
+ .table-stage .game-grid.game-workspace{width:max-content;max-width:100%;margin:0 auto;grid-template-columns:210px max-content var(--supply-size,180px);grid-template-areas:"overview offer supply" "overview personal personal";justify-content:center}
+ .table-stage .all-players{grid-template-columns:repeat(var(--player-count),minmax(0,1fr));justify-content:stretch}
+}
+.table-stage .all-players{align-items:stretch}
+.table-stage .game-workspace .player-table .player-table-heading{margin-top:auto}
+.table-stage .game-workspace .market-panel{display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.table-stage .game-workspace .market-panel>h2{align-self:stretch;text-align:center}
+.table-stage .game-workspace .market-panel .market.sculpted-market{margin:auto;width:100%;max-width:100%;flex-shrink:0}
+body:has(.table-fit) #root main .turn-bar>.restart-turn:hover:enabled,
+body:has(.table-fit) #root main .turn-bar>.restart-turn:focus-visible:enabled{background:#253b68;color:#fff;border-color:#253b68;box-shadow:0 4px 10px #172e5040}
+body:has(.table-fit) #root main .turn-bar>.primary:hover:enabled,
+body:has(.table-fit) #root main .turn-bar>.primary:focus-visible:enabled{background:#356b5d;color:#fff;border-color:#356b5d;box-shadow:0 4px 10px #234c3a40}
+@media(min-width:801px){
+ .table-stage .game-grid.game-workspace{grid-template-areas:"overview offer supply" ". personal personal"}
+ .table-stage .game-workspace .match-overview{align-self:stretch}
+ .table-stage .game-workspace .revealed-panel{display:flex;flex-direction:column;justify-content:center}
+}
+/* Informações mais horizontais, para não alongar as janelas de cartas e conjuntos. */
+@media(min-width:801px){
+ .table-stage{--shared-card-width:clamp(60px,min(calc(var(--table-height,600px)*.17),calc((var(--table-width,1200px) - 400px)/7)),108px)}
+ .table-stage .game-grid.game-workspace{grid-template-columns:300px max-content var(--supply-size,180px)}
+ .table-stage .game-workspace .match-overview{display:grid;grid-template-columns:1fr;align-content:center;row-gap:8px;padding:15px 17px}
+ .match-overview .match-code,.match-overview h2,.match-overview .match-guidance{margin:0}
+ .match-overview .match-guidance{font-size:10px}
+ .match-overview .match-roster{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .match-overview .match-roster>li{padding:6px 5px;gap:6px}
+ .match-overview .match-avatar{width:30px;height:30px;flex-basis:30px}
+ .match-overview .match-person strong{font-size:10px}
+ .match-overview .match-person small{font-size:9px}
+ .match-overview .match-edition{display:flex;flex-direction:row;justify-content:space-between;gap:8px;margin:0;padding:7px 0 0}
+ .match-overview .match-counts{display:flex;flex-direction:row;margin:0;font-size:9px}
+ .match-overview .match-home{margin:0}
+ .table-stage .game-workspace .revealed-panel{justify-content:flex-start}
+ .table-stage .game-workspace .revealed-panel,.table-stage .game-workspace .market-panel{min-height:0}
+}
+/* Trios compactos: a folga fica entre um conjunto e outro. */
+.table-stage .game-workspace .sculpted-market .token-group>div,
+.table-stage .game-workspace .sculpted-market .token-group:last-child>div{column-gap:0;row-gap:0;max-width:60px}
+.table-stage .game-workspace .sculpted-market .token-group>div>.token:last-child:nth-child(3){margin:-4px 0 0;grid-column:1/3;justify-self:center}
+@media(max-width:800px){.table-stage .game-workspace .sculpted-market .token-group>div,.table-stage .game-workspace .sculpted-market .token-group:last-child>div{max-width:42px}.table-stage .game-workspace .sculpted-market .token-group>div>.token:last-child:nth-child(3){margin-top:-3px}}
+@media(min-width:801px){.table-stage .game-workspace .sculpted-market .token-group .token>.piece-art{width:42px;height:36.75px}}

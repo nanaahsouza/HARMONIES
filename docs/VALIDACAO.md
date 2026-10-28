@@ -252,3 +252,97 @@ Usuário autorizou o envio da versão atual. Build e 129 testes aprovados. Envio
 28/10/2026: novo aumento das cartas concluídas, de 48px para 62px, mantendo a posição acima do nome. Build e revisão visual aprovados. Somente local.
 
 28/10/2026: usuário autorizou envio ao GitHub da revanche, retorno à página inicial, retirada dos pontos sob os tabuleiros e cartas concluídas ampliadas. Build e 135 testes aprovados.
+
+28/10/2026: imagem fornecida harmonies logo.png adicionada sem alterações como favicon e apple-touch-icon. Build aprovado e hash da imagem de origem idêntico ao arquivo distribuído. Alteração somente local.
+
+### 28/10/2026 — Capa, logo e Sobre o jogo na página inicial
+- Aplicadas as imagens fornecidas do leão na paisagem e da logo do Harmonies, preservando os arquivos originais.
+- Apresentação em painel verde escuro com texto claro; formulário bege com contraste reforçado e espaçamentos menores.
+- Inserido integralmente o texto Sobre o jogo fornecido pelo usuário.
+- Logo de imagem no cabeçalho da entrada e das salas. Ícone anterior preservado.
+- Build aprovado; capa, logo e texto conferidos no navegador em 1280x720 e 390x844, sem transbordamento horizontal. Sem envio ao GitHub.
+
+### 28/10/2026 — Nova entrada inspirada no modelo e Como jogar (local)
+- Removida a frase UM ENCONTRO ENTRE PAISAGENS COMPARTILHADAS.
+- Painel claro à esquerda, arte do leão à direita, duas opções principais de criação/entrada e resumo Sobre o jogo com Saiba mais.
+- Formulários próprios para criar sala e entrar por código; erros do servidor também aparecem no formulário.
+- Como jogar reúne o texto completo do usuário, preparação, ações, empilhamento, cubos, pontuação, fim de partida e revanche. Conteúdo baseado nas regras implementadas/documentadas no projeto.
+- Configurações permite escolher o número inicial de participantes; opções da partida seguem na preparação.
+- Build aprovado. Criada sala de testes EBKZLVHBAXXR pelo novo formulário e confirmada entrada de outra sessão por código. Abertura de instruções e configurações conferida; responsividade 1280x720 e 390x844 sem transbordamento horizontal. Sem ações na partida real do usuário. Nenhum envio ao GitHub.
+
+### 28/10/2026 — Entrada simplificada e opções na criação (local)
+- Retirados 01 / ENCONTRE-SE, Saiba mais e Configurações; topo mantém somente Como jogar.
+- Imagem Sobre o jogo substituída pela caixa fornecida, sem alteração do arquivo.
+- Criar sala inclui nome, número de pessoas, lado A/B e Pulsar. HTTP/Store validam e salvam as escolhas atomicamente na criação, mantendo os padrões anteriores quando omitidas.
+- Build e 136 testes aprovados. Novo teste HTTP cobre as combinações de 2–4 jogadores, A/B, Pulsar ligado/desligado e opções inválidas sem criar salas.
+- Navegador: sala de teste WCRASASB2TBN criada com 4 jogadores, lado B e Pulsar; configuração confirmada na preparação. Formulário móvel 390x844 cabe na tela sem transbordar horizontalmente. SQLite existente preservado; servidor local reiniciado para aplicar o backend. Nenhum envio ao GitHub.
+
+28/10/2026: formulário Criar sala/Entrar com código ajustado para branco quente do painel inicial, com campos claros e opção Pulsar em tom neutro. Build e revisão visual aprovados. Somente local.
+
+### 28/10/2026 — Mesa com painéis claros e coluna da partida (local)
+- Aplicada composição da referência: participantes/vez na coluna esquerda, oferta de cartas ao centro, conjuntos à direita e áreas dos jogadores abaixo.
+- Controles do turno em cápsulas claras no topo, com cores distintas e geometria fixa em hover/foco/ativo. Painéis arredondados claros e translúcidos.
+- Preservados tabuleiros, cartas originais, peças, cubos, cartas concluídas, regra de pontuação final, reinício de turno, encerramento e revanche.
+- Sidebar mostra nome e presença dos participantes, host, vez, rodada, edição, lado, contagens e convite/início.
+- Build aprovado. Conferidas partida ativa e concluída, desktop 1280x720 e celular 390x844, sem rolagem vertical. Em sala de testes: pegar carta, hover de controle, selecionar cubo e reiniciar; escala 0,856338, altura do controle 37px e posições dos tabuleiros constantes. Sala de testes restaurada, sem ações na partida real do usuário. Nenhum envio ao GitHub.
+
+### 28/10/2026 — Painel justo às cartas e avatares (local)
+- Painel da oferta no desktop acompanha a largura das cinco cartas; reserva fica ao lado, sem esticar a janela da oferta.
+- Contagem da bolsa retirada do tabuleiro de conjuntos e da coluna de informações; estado/regra da bolsa preservados.
+- Quatro avatares: Corvo e Lontra das imagens fornecidas, Coala da arte original das cartas e Leão da imagem fornecida anteriormente. Sem gerar imagens substitutas.
+- Escolha na preparação e ao clicar no próprio avatar na partida. Avatar salvo por participante, sincronizado e mostrado na lista e na barra do tabuleiro. Salas antigas recebem opções padrão sem migração destrutiva.
+- Build e 137 testes aprovados; teste de avatares repetido após escolha final dos quatro modelos. Cobre identidade, validação, idempotência, persistência, compatibilidade e revanche.
+- Navegador: seleção de Coala na sala de testes WCRASASB2TBN persistiu após recarregar. Seletor durante a partida conferido na sala de testes CIHWQXHIN2EK. Oferta termina a aproximadamente 14px da última carta em 1280x720, sem rolagem vertical. Nenhuma ação na sala real. Servidor reiniciado preservando o banco. Sem envio ao GitHub.
+
+### 28/10/2026 — Alinhamento das janelas e hover de reiniciar (local)
+- Hover/foco de Reiniciar turno em azul-marinho com texto branco; Encerrar turno em verde com texto branco, mantendo geometria fixa.
+- Retirada indicação você apenas da barra de nome sob os tabuleiros. Identificação na lista de participantes preservada.
+- Mesa centralizada como conjunto. Coluna da partida, oferta e reserva compartilham início/fim na primeira linha; tabuleiros abaixo começam no início da oferta e terminam no fim da reserva, com alturas iguais.
+- Reserva centralizada horizontal/verticalmente dentro da janela.
+- Build aprovado. Bordas verificadas em 1920x920 e 1280x720 sem rolagem vertical. Hover real conferido: fundo rgb(37,59,104), texto branco, posição e dimensões idênticas antes/depois. Ação de teste desfeita via Reiniciar meu turno; nenhuma ação na partida real. Sem envio ao GitHub.
+
+28/10/2026: painel de informações mais largo e com participantes lado a lado, edição e rodada na horizontal. Reduzida a altura natural do painel para evitar espaço sobrando nas janelas de cartas e conjuntos, preservando as bordas comuns. Build e revisão visual em 1280x720 aprovados, sem rolagem vertical. Somente local.
+
+28/10/2026: ampliadas folgas horizontais e verticais nos trios da reserva e removida margem negativa do terceiro disco. Proporção dos discos no desktop ajustada para separar também grupos vizinhos. Build aprovado e visual conferido no navegador. Somente local.
+
+28/10/2026: conforme esclarecimento, os três discos voltam a formar um trio compacto; folga preservada entre conjuntos, mantendo a proporção menor dos discos na reserva. Build e revisão visual aprovados. Somente local.
+
+28/10/2026: conteúdo visual das peças do tabuleiro elevado 8 unidades SVG para centralizar o disco nos hexágonos. Pilhas, sombras, indicador de altura e cubos deslocados juntos; grade, coordenadas lógicas e alvos de clique preservados. Build e revisão visual com pilhas e cubo aprovados. Somente local.
+
+### 28/10/2026 — Avatar no formulário e espera no lobby
+- Criar sala permite escolher Corvo, Lontra, Coala ou Leão, junto ao nome e às opções da partida.
+- Avatar validado e salvo na mesma requisição de criação; clientes antigos mantêm avatar padrão.
+- Entrada direta no lobby, sem iniciar automaticamente. Todos os lugares precisam estar ocupados e todos devem confirmar antes de o host iniciar.
+- Build concluído e 137 testes aprovados. Integração cobre os quatro avatares, persistência, opções inválidas e bloqueio de início com participantes ausentes ou não preparados.
+- Navegador: selecionar avatar não envia o formulário; criação com Leão levou diretamente ao lobby, recarregar preservou a imagem e Iniciar partida permaneceu desabilitado com 1/2 participantes.
+- Alterações locais, sem publicação no GitHub.
+
+### 28/10/2026 — Espera diretamente na mesa
+- Substituída a tela Preparem a partida pela própria mesa, com tabuleiros vazios, vagas e convite enquanto faltam participantes.
+- Criar sala ativa entrada direta; último ingresso inicia automaticamente e transmite o estado para todos. Opções e avatar permanecem os escolhidos na criação.
+- Jogadas ficam bloqueadas no cliente e servidor antes da sala completar. Nenhuma confirmação ou botão Iniciar é necessário no fluxo atual.
+- Salas anteriores sem partida ativa entram no mesmo fluxo quando o host abre a mesa. Partidas já em andamento são preservadas.
+- 138 testes aprovados; teste HTTP de entrada direta cobre 2, 3 e 4 jogadores, avatares, configurações, bloqueio antecipado, sala cheia e salas anteriores.
+- Navegador: criador entrou diretamente na mesa (1/2); convidado entrou pelo convite em outra sessão; ambos receberam início automático sem confirmação.
+- Build concluído. Alterações locais, sem publicação no GitHub.
+
+### 28/10/2026 — Avatar de quem entra por convite
+- Campo Seu avatar também em Entrar com código, com os mesmos quatro animais.
+- Avatar enviado e validado na própria entrada; valores ausentes preservam o padrão por assento e valores inválidos não ocupam vaga.
+- 138 testes aprovados e build concluído. Integração HTTP cobre convidados com os quatro avatares, persistência e início automático com a última entrada.
+- Navegador: seleção de Coala não enviou formulário; entrar iniciou a sala de teste e recarregar preservou o avatar escolhido.
+- Alteração local, sem envio ao GitHub.
+
+### 28/10/2026 — Página inicial com painel à direita
+- Composição ajustada ao novo modelo: paisagem inteira, leão em destaque à esquerda, painel creme translúcido à direita e Como jogar no topo.
+- Criar sala em verde petróleo, entrada por código mais leve e caixa do jogo com descrição no rodapé do painel.
+- Formulários, avatares e instruções preservados. Adaptação para celular com arte acima do painel.
+- Build concluído. Conferência visual em 1280×720 (sem rolagem vertical) e 390×844 (sem transbordamento horizontal). Diálogos de criação e Como jogar abriram corretamente no celular.
+- Alterações locais, sem publicação no GitHub.
+
+### 28/10/2026 — Acabamentos da página inicial
+- Ícone de livro restaurado em Como jogar.
+- Caixa do jogo recortada visualmente pelo contorno em CSS, retirando o quadrado branco e preservando a imagem original.
+- Entrar com código com o mesmo verde do botão Criar sala e brilho suave ao passar o mouse ou focar pelo teclado, sem mudar a geometria.
+- Build aprovado e conferência visual no navegador; foco de teclado confirmou o brilho na borda.
+- Alterações locais, sem envio ao GitHub.

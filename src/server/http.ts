@@ -22,12 +22,12 @@ export function createApp({database='data/harmonies.sqlite',origin='',dist=resol
     requireRule(++limit.n<=240,'RATE_LIMIT','Muitas requisições. Aguarde um minuto.');
     if(req.headers.origin){const expected=origin||`http://${req.headers.host}`;requireRule(req.headers.origin===expected,'ORIGIN','Origem da requisição não autorizada.');}
     if(req.method==='POST'&&url.pathname==='/api/rooms'){
-     const data=await body(req),created=store.create(safeName(data.name),data.playerCount??2);json(res,201,{token:created.token,state:store.public(created.room,0)});return;
+     const data=await body(req),created=store.create(safeName(data.name),data.playerCount??2,{side:data.side,pulse:data.pulse,avatar:data.avatar,directPlay:data.directPlay});json(res,201,{token:created.token,state:store.public(created.room,0)});return;
     }
     const match=url.pathname.match(/^\/api\/rooms\/([A-Z0-9_-]{12})(?:\/(join|actions|events))?$/);
     requireRule(match,'ROUTE','Endereço inválido.');const [,code,endpoint]=match;
     if(req.method==='POST'&&endpoint==='join'){
-     const data=await body(req),joined=store.join(code,safeName(data.name));json(res,201,{token:joined.token,state:store.public(joined.room,joined.seat)});publish(code);return;
+     const data=await body(req),joined=store.join(code,safeName(data.name),data.avatar);json(res,201,{token:joined.token,state:store.public(joined.room,joined.seat)});publish(code);return;
     }
     const auth=req.headers.authorization;requireRule(typeof auth==='string'&&auth.startsWith('Bearer ')&&auth.length<=128,'AUTH','Sessão necessária.');const token=auth.slice(7),seat=store.identity(code,token);
     if(req.method==='GET'&&endpoint==='events'){

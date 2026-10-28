@@ -1,6 +1,6 @@
 # Harmonies Online — 2 a 4 jogadores
 
-Aplicação executável com React/TypeScript/Vite, motor independente, servidor Node 24, atualizações SSE e persistência SQLite. Inclui os 32 padrões de animais do jogo-base, tabuleiro de 23 células, ambos os lados A/B, pontuação, fim e desempates. Sem IA ou Espíritos da Natureza. A expansão **Pulsar é opcional**: selecione-a na preparação de uma nova sala para usar42 cartas e espelhamento nos novos padrões. Detalhes e fontes em `docs/PULSAR.md`.
+Aplicação executável com React/TypeScript/Vite, motor independente, servidor Node 24, atualizações SSE e persistência SQLite. Inclui os 32 padrões de animais do jogo-base, tabuleiro de 23 células, ambos os lados A/B, pontuação, fim e desempates. Sem IA ou Espíritos da Natureza. A expansão **Pulsar é opcional**: selecione-a ao criar uma sala para usar 42 cartas e espelhamento nos novos padrões. Detalhes e fontes em `docs/PULSAR.md`.
 
 **Situação da entrega:** compilação e testes locais executados; salas para 2, 3 e 4 jogadores, com 129 testes locais e fluxo de quatro participantes conferido no navegador. Não houve implantação pública nem teste em dispositivos/redes diferentes. O critério de aceite “online em duas redes” permanece pendente até publicar e executar o roteiro de validação. Não existe URL pública desta entrega.
 
@@ -22,9 +22,9 @@ Para desenvolver com recarga automática, rode `pnpm server` em um terminal e `p
 
 ### Como jogar com 2, 3 ou 4 pessoas
 
-1. A primeira pessoa informa seu nome, escolhe 2, 3 ou 4 jogadores e cria a sala. Compartilha o convite com os demais.
-2. Cada participante abre o link, informa seu nome e entra. Todos os lugares escolhidos precisam estar ocupados para iniciar. O host pode mudar o número de lugares na preparação, sem remover quem já entrou.
-3. O host escolhe o lado A/B, o primeiro jogador e se a expansão Pulsar será usada. Todos confirmam a preparação. Entradas e alterações na configuração retiram as confirmações anteriores.
+1. A primeira pessoa escolhe nome, avatar, 2, 3 ou 4 jogadores, lado A/B e expansão Pulsar no formulário Criar sala. Entra diretamente na mesa e compartilha o convite.
+2. Cada participante abre o convite ou usa Entrar com código, informa seu nome, escolhe um dos quatro avatares e entra diretamente na mesa.
+3. Enquanto faltam participantes, aparecem os tabuleiros vazios e a contagem de jogadores. As jogadas ficam bloqueadas. Quando o último lugar é ocupado, a partida começa automaticamente, com o host jogando primeiro.
 4. Os turnos seguem a ordem de entrada, a partir do primeiro jogador escolhido. Pegue três peças e coloque-as no tabuleiro. Cartas e animais podem ser escolhidos nos momentos permitidos.
 5. Para colocar um animal, toque na própria carta ou no cubo sobre ela e depois em um destino destacado no seu tabuleiro. O servidor valida o habitat e a orientação.
 6. Antes de encerrar, “Reiniciar meu turno” devolve as escolhas e colocações daquele turno. Depois de “Encerrar turno”, não é possível voltar.
@@ -109,4 +109,8 @@ As cartas disponíveis têm brilho e elevação discretos ao passar o mouse. A s
 
 ## Depois da partida
 
-No placar, o host pode escolher **Preparar revanche**. Os participantes e as opções permanecem na mesma sala; todos voltam à preparação e precisam confirmar antes de uma nova partida começar. A revanche substitui o resultado anterior da sala. **Voltar ao início** (ou **Início** no topo) abre a página para criar outra sala ou entrar por código, preservando a sessão da sala anterior no navegador.
+No placar, o host pode escolher **Preparar revanche**. Os participantes e as opções permanecem na mesma sala; nas salas com entrada direta, uma nova partida começa automaticamente com os mesmos participantes. A revanche substitui o resultado anterior da sala. **Voltar ao início** (ou **Início** no topo) abre a página para criar outra sala ou entrar por código, preservando a sessão da sala anterior no navegador.
+
+A página inicial apresenta opções separadas para criar sala e entrar com código. O botão **Como jogar** contém um guia de preparação, turno, empilhamento, habitats e pontuação. No formulário **Criar sala**, escolha nome, avatar, número de participantes, lado do tabuleiro e expansão Pulsar. As opções são gravadas ao criar a sala. A mesa aguarda todos entrarem e inicia automaticamente.
+
+Ao criar ou entrar por código, escolha Corvo, Lontra, Coala ou Leão no campo **Seu avatar**. Durante a partida, clique no seu avatar na coluna de participantes para trocá-lo. A escolha fica salva na sala e permanece na revanche.

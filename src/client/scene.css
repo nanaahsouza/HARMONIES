@@ -153,3 +153,42 @@ body:has(.table-fit) .room-bar .room-home,.home-link{display:inline-flex;align-i
 .table-stage .game-workspace .player-table .landscape-panel{position:relative}
 .table-stage .game-workspace .player-table .landscape-panel .habitat-picker{bottom:5px}
 .table-stage .game-workspace .completed-habitats .animal-card{flex-basis:62px;width:62px;max-width:62px;min-width:62px}
+/* Logo original fornecida e capa do leão na entrada. */
+header .wordmark.brand-image,body:has(.table-fit) header .wordmark.brand-image{display:block;position:relative;overflow:hidden;width:260px;height:47px;flex:0 0 auto;margin:0;line-height:1;mix-blend-mode:multiply}
+header .brand-image img{display:block;position:absolute;width:280px;max-width:none;height:auto;left:-16px;top:-29px}
+body:has(.table-fit) header .wordmark.brand-image{width:210px;height:38px}
+body:has(.table-fit) header .brand-image img{width:226px;left:-13px;top:-24px}
+body:has(.welcome){background:#c6b475 url('/assets/welcome-lion.png') center center/cover fixed no-repeat;min-height:100dvh}
+body:has(.welcome) #root{min-height:100dvh;display:flex;flex-direction:column}
+body:has(.welcome) header{position:relative;margin:0;padding:14px 30px;background:linear-gradient(180deg,#fff3c7b8,#fff3c728);border:0;backdrop-filter:none}
+body:has(.welcome) main{flex:1;display:flex;align-items:center;max-width:1360px;width:100%;padding:18px 30px 25px;margin:0 auto;background:transparent}
+body:has(.welcome) .welcome{width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,390px);gap:7%;align-items:end;min-height:calc(100dvh - 170px)}
+body:has(.welcome) .welcome .intro{align-self:end;max-width:530px;padding:24px 28px;margin:0;border-radius:20px;background:linear-gradient(135deg,#174654f2,#244d45ed);border:1px solid #c9d3b65e;box-shadow:0 8px 30px #163a452b;backdrop-filter:blur(9px)}
+body:has(.welcome) .welcome .intro h1{font:500 clamp(28px,3vw,42px)/1.12 Georgia,serif;letter-spacing:-.8px;color:#fff5dc;margin:8px 0 14px;text-shadow:none}
+body:has(.welcome) .welcome .intro h1 em{font-style:italic;color:#f5d990}
+body:has(.welcome) .welcome .intro>p:not(.eyebrow):not(.caption){font:400 14px/1.65 system-ui;color:#f8edcf;margin:0 0 14px;max-width:430px}
+body:has(.welcome) .welcome .intro .eyebrow{font-size:9px;line-height:1.5;letter-spacing:1.6px;color:#dce5ca;margin:0}
+body:has(.welcome) .welcome .intro .caption{font-size:10px;line-height:1.5;color:#d9dfc7;margin:0}
+body:has(.welcome) .welcome .intro>svg{display:none}
+body:has(.welcome) .entrance{padding:25px 28px;background:#fff0cfeF;border:1px solid #fff6df;border-radius:22px;box-shadow:0 10px 40px #24464d33;backdrop-filter:blur(12px)}
+body:has(.welcome) .entrance h2{color:#294f49;font-size:25px;margin:7px 0 15px}
+body:has(.welcome) .entrance .step,body:has(.welcome) .entrance label{color:#5b654f}
+body:has(.welcome) .entrance label{font-size:11px}
+body:has(.welcome) .entrance input,body:has(.welcome) .entrance select{background:#fff8e8;color:#354e45;border:1px solid #c6b38c;padding:11px 12px}
+body:has(.welcome) .entrance .primary{background:#356b5d;color:#fff5dd}
+body:has(.welcome) .entrance .primary:disabled{background:#c4c7ab;color:#5c6851;opacity:1}
+body:has(.welcome) .entrance .small-note,body:has(.welcome) .entrance .development{color:#62694f;font-size:10px;line-height:1.5}
+body:has(.welcome) .entrance .development{background:#e3dec099}
+body:has(.welcome) footer{margin:0;padding:10px 30px;background:#183f47e8;border:0;color:#f2e6c7;font-size:10px}
+body:has(.welcome) footer a{color:#f2e6c7}
+@media(max-width:800px){header .wordmark.brand-image,body:has(.table-fit) header .wordmark.brand-image{width:180px;height:33px}header .brand-image img,body:has(.table-fit) header .brand-image img{width:195px;left:-12px;top:-21px}body:has(.welcome){background-position:30% top}body:has(.welcome) header{padding:12px 16px}body:has(.welcome) main{padding:12px 16px 24px}body:has(.welcome) .welcome{grid-template-columns:1fr;gap:16px;min-height:0;max-width:500px;margin:0 auto}body:has(.welcome) .welcome .intro{margin-top:155px;max-width:none;padding:20px}body:has(.welcome) .welcome .intro h1{font-size:30px}body:has(.welcome) .entrance{padding:23px}body:has(.welcome) footer{padding:12px 16px;gap:12px}}
+body:has(.welcome) .entrance>p{color:#59664e;font-size:12px;line-height:1.5;margin:8px 0 14px}
+body:has(.welcome) .entrance label{margin:12px 0 10px;gap:6px}
+body:has(.welcome) .entrance .step{margin-bottom:8px;display:block;font-size:9px}
+body:has(.welcome) .entrance .divider{margin:14px 0;color:#667052}
+body:has(.welcome) .entrance input::placeholder{color:#73755f;opacity:1}
+body:has(.welcome) .entrance .small-note{margin-top:12px}
+body:has(.welcome) .entrance .development{margin-top:10px;padding:9px 11px}
+body:has(.welcome) .entrance>button:disabled:not(.primary){background:#e4d1ad;color:#65674d;opacity:1}
+body:has(.welcome) .welcome .intro>p:not(.eyebrow):not(.caption){max-width:none}
+@media(min-width:801px) and (max-height:780px){body:has(.welcome) .entrance{padding:19px 25px}body:has(.welcome) .entrance h2{margin-bottom:9px}body:has(.welcome) .entrance .development{font-size:9px}body:has(.welcome) .welcome{min-height:0}}
