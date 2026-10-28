@@ -134,3 +134,22 @@ body:has(.table-fit) #root main .turn-bar>.finish-game:hover:enabled{background:
 .score-sheet-footer p{font-size:10px;margin:4px 0 13px}
 .score-sheet-footer .primary{background:#38594d;color:#fff1d0;border:1px solid #294d3f;padding:9px 22px;font-size:12px}
 @media(max-width:600px){.score-sheet{padding:18px 12px;border-radius:15px}.score-sheet h2{font-size:27px}.score-sheet-header .eyebrow{font-size:8px;letter-spacing:1px}.score-sheet th,.score-sheet td{padding:7px 3px}.score-sheet thead th{font-size:10px}.score-sheet thead th:first-child{width:29%;padding-left:6px}.score-sheet tbody th{font-size:10px}.score-category{gap:2px;flex-direction:column;align-items:center;text-align:center}.score-piece{height:28px}.score-piece>.piece-art{width:37px;height:33px}.score-sheet tbody td{font-size:18px}.score-sheet tfoot th{font-size:10px;letter-spacing:1px;padding-left:6px}.score-sheet tfoot strong{font-size:24px}.score-reopen{font-size:10px}}
+/* Próxima partida e retorno à entrada, sem apagar a sessão da sala. */
+body:has(.table-fit) .room-bar .room-home,.home-link{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:6px 11px;background:#fff0cbd9;color:#35594c;border:1px solid #bdac85;border-radius:9px;font:600 11px/1.3 system-ui;text-decoration:none;white-space:nowrap}
+.home-link:hover{background:#fff6df;color:#294f41}
+.score-reopen{flex-wrap:wrap}
+.postgame-actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px}
+.score-reopen .postgame-actions{margin-left:auto}
+.score-sheet-footer .postgame-actions{margin-top:10px}
+.score-sheet-footer .postgame-actions .primary,.score-reopen .postgame-actions .primary{padding:9px 16px;background:#38594d;color:#fff1d0;border:1px solid #294d3f;font-size:12px}
+.score-sheet-footer .postgame-actions button:disabled,.score-reopen .postgame-actions button:disabled{opacity:.65;cursor:wait}
+.rematch-wait{font-size:11px;color:#6c7159}
+.score-sheet-footer .rematch-note{margin:9px auto 0;max-width:440px;font-size:10px;line-height:1.5}
+@media(max-width:600px){.score-reopen{justify-content:center}.score-reopen .postgame-actions{margin-left:0;width:100%}.score-sheet-footer .postgame-actions{gap:6px}body:has(.table-fit) .room-bar .room-home{font-size:9px;min-height:26px;padding:4px 6px}}
+/* Cartas concluídas entre o tabuleiro e a identificação do jogador. */
+.table-stage .game-workspace .player-table .completed-habitats{order:3;flex-wrap:nowrap;justify-content:safe center;gap:6px;padding:6px 3px 4px;overflow-x:auto;max-width:100%;flex-shrink:0}
+.table-stage .game-workspace .completed-habitats .animal-card{flex:0 0 48px;width:48px;max-width:48px;min-width:48px}
+.table-stage .game-workspace .player-table .player-table-heading{order:4}
+.table-stage .game-workspace .player-table .landscape-panel{position:relative}
+.table-stage .game-workspace .player-table .landscape-panel .habitat-picker{bottom:5px}
+.table-stage .game-workspace .completed-habitats .animal-card{flex-basis:62px;width:62px;max-width:62px;min-width:62px}

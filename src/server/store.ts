@@ -52,6 +52,11 @@ export class Store {
    requireRule(typeof action.first==='number'&&Number.isInteger(action.first)&&action.first>=0&&action.first<room.seats.length,'FIRST','Primeiro jogador inválido.');
    requireRule(action.pulse===undefined||typeof action.pulse==='boolean','EXPANSION','Opção Pulsar inválida.');
    room.playerCount=count;room.side=action.side;room.first=action.first;room.pulse=(action.pulse??room.pulse) as boolean;room.seats.forEach(s=>s.ready=false);
+  }else if(action.type==='rematch'){
+   requireRule(seat===0,'HOST','Somente o host pode preparar a revanche.');
+   requireRule(room.game?.finished,'NOT_FINISHED','A partida precisa terminar antes de preparar a revanche.');
+   room.game=null;delete room.turnStart;
+   room.seats.forEach(s=>s.ready=false);
   }else if(action.type==='ready'){
    requireRule(!room.game,'STARTED','A partida já começou.');requireRule(typeof action.ready==='boolean','READY','Confirmação inválida.');room.seats[seat].ready=action.ready;
   }else if(action.type==='start'){

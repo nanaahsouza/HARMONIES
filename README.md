@@ -106,3 +106,7 @@ Siga `docs/IMPLANTACAO.md`. A opção concreta é **Render Web Service Docker + 
 Todos os tabuleiros ficam visíveis na mesma página. As cartas de habitat aparecem acima de cada tabuleiro, com as peças da mão ao lado. A oferta de cartas e a reserva central ficam juntas na parte superior, sobre a paisagem de fundo fornecida pelo usuário.
 
 As cartas disponíveis têm brilho e elevação discretos ao passar o mouse. A seleção de peças, cubos e os controles de turno mantêm o tamanho da mesa estável. No fim da partida, uma ficha ilustrada mostra os pontos de árvores, montanhas, campos, construções, água e animais, além do total de cada jogador. É possível fechar a ficha para rever os tabuleiros e reabri-la depois.
+
+## Depois da partida
+
+No placar, o host pode escolher **Preparar revanche**. Os participantes e as opções permanecem na mesma sala; todos voltam à preparação e precisam confirmar antes de uma nova partida começar. A revanche substitui o resultado anterior da sala. **Voltar ao início** (ou **Início** no topo) abre a página para criar outra sala ou entrar por código, preservando a sessão da sala anterior no navegador.

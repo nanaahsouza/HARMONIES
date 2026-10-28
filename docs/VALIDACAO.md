@@ -237,3 +237,18 @@ Executados70 testes (55 anteriores +15 Pulsar), todos aprovados, e build TypeScr
 
 ### 28/10/2026 — Versão autorizada para GitHub
 Usuário autorizou o envio da versão atual. Build e 129 testes aprovados. Envio inclui fonte, documentação e imagem de fundo utilizada; banco de partidas, dependências, build gerado e configurações privadas não fazem parte do repositório.
+
+### 28/10/2026 — Revanche e retorno à página inicial (somente local)
+- Host pode preparar uma revanche após o fim normal ou antecipado. Sala, sessões, participantes e opções permanecem; tabuleiros e cartas voltam ao estado de preparação, com todos desmarcados para confirmar novamente.
+- Botões no placar e na faixa de resultado; link Início disponível no topo para criar/entrar em outras salas. Retorno à entrada não apaga a sessão anterior.
+- Build e 135 testes aprovados, incluindo revanche com 2, 3 e 4 participantes, com/sem Pulsar, bloqueio por host, bloqueio durante partida, idempotência e preparação obrigatória.
+- No navegador: revanche da sala de testes de 4 jogadores voltou à preparação; Início abriu criação/entrada. Sala real do usuário não foi alterada. Servidor local reiniciado preservando o SQLite existente.
+- Usuário pediu testar antes: alterações não enviadas ao GitHub.
+
+28/10/2026: retiradas as faixas de pontuação dos tabuleiros após o fim da partida. Pontos permanecem na ficha de resultado. Build aprovado e ausência das faixas confirmada no navegador em partida concluída. Alteração somente local.
+
+28/10/2026: cartas concluídas ampliadas de 29px para 48px na mesa e movidas para abaixo do tabuleiro, acima do nome. Linha única com deslocamento horizontal quando necessário. Orientação de cubo ancorada ao tabuleiro para não cobrir as cartas concluídas. Build aprovado; posição conferida no navegador com carta concluída existente, sem realizar ações na partida. Sem rolagem vertical em 1280x720. Somente local.
+
+28/10/2026: novo aumento das cartas concluídas, de 48px para 62px, mantendo a posição acima do nome. Build e revisão visual aprovados. Somente local.
+
+28/10/2026: usuário autorizou envio ao GitHub da revanche, retorno à página inicial, retirada dos pontos sob os tabuleiros e cartas concluídas ampliadas. Build e 135 testes aprovados.
