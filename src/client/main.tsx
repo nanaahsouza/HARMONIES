@@ -1,3 +1,4 @@
+import {request,readApiResponse} from './api.ts';
 import {avatarForSeat} from '../shared/avatars.ts';
 import type {AvatarId} from '../shared/avatars.ts';
 import React,{useEffect,useState,useId} from 'react';
@@ -33,10 +34,6 @@ function actionId(){
  // randomUUID exige contexto seguro; getRandomValues também funciona no HTTP da rede local.
  if(typeof crypto.randomUUID==='function')return crypto.randomUUID();
  return Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join('');
-}
-async function request(path:string,method='GET',data?:unknown,secret=''){
- const res=await fetch(path,{method,headers:{...(data?{'Content-Type':'application/json'}:{}),...(secret?{Authorization:`Bearer ${secret}`}:{})},body:data?JSON.stringify(data):undefined});
- const json=await res.json();if(!res.ok)throw Object.assign(new Error(json.message??'Falha de conexão.'),{code:json.code});return json;
 }
 function Token({color,height=1}:{color:Color;height?:number}){return <span className="token token-illustrated" title={`${names[color]}, altura ${height}`} role="img" aria-label={names[color]}><PieceArt color={color}/>{height>1&&<small>{height}</small>}</span>;}
 function Scenery(){return <svg viewBox="0 0 600 330" role="img" aria-label="Paisagem original com montanhas, rio e árvores"><circle cx="430" cy="88" r="43" fill="#eac47e"/><path d="M0 253 152 65 286 249 378 126 600 274V330H0Z" fill="#a7b7ac"/><path d="m95 135 57-70 51 70-37-19-21 17-20-12Z" fill="#f4f0e4"/><path d="M0 260Q140 193 286 257T600 246V330H0Z" fill="#627f64"/><path d="M600 239Q433 239 375 276T220 330H413Q382 301 463 284T600 265Z" fill="#77b6bb"/>{[65,113,490,537].map((x,i)=><g key={x} transform={`translate(${x} ${175+i%2*20})`}><path d="M-5 31h10v80H-5z" fill="#8e684a"/><path d="M0-42 36 46H-36Z" fill="#355d4a"/><path d="M0-12 44 77H-44Z" fill="#436e53"/></g>)}</svg>;}
@@ -93,7 +90,7 @@ function App(){
    if(ctrl.signal.aborted)return;setConnection(attempt?'Reconectando…':'Conectando…');
    try{
     const res=await fetch(`/api/rooms/${code}/events`,{headers:{Authorization:`Bearer ${token(code)}`},signal:ctrl.signal});
-    if(!res.ok){const data=await res.json();throw new Error(data.message);}
+    if(!res.ok)await readApiResponse(res);
     setConnection('Conectado');attempt=0;const reader=res.body!.getReader(),decoder=new TextDecoder();let buffer='';
     while(!ctrl.signal.aborted){const {done,value}=await reader.read();if(done)throw new Error('Conexão interrompida.');buffer+=decoder.decode(value,{stream:true});let at:number;
      while((at=buffer.indexOf('\n\n'))!==-1){const event=buffer.slice(0,at);buffer=buffer.slice(at+2);if(event.startsWith('data: '))setNew(JSON.parse(event.slice(6)));}

@@ -346,3 +346,15 @@ Usuário autorizou o envio da versão atual. Build e 129 testes aprovados. Envio
 - Entrar com código com o mesmo verde do botão Criar sala e brilho suave ao passar o mouse ou focar pelo teclado, sem mudar a geometria.
 - Build aprovado e conferência visual no navegador; foco de teclado confirmou o brilho na borda.
 - Alterações locais, sem envio ao GitHub.
+
+### 28/10/2026 — Manual ilustrado no Como jogar
+- Adicionado leitor de oito páginas do manual brasileiro com ilustrações originais, índice por assunto, navegação e ampliação.
+- Mantido guia acessível Como jogar online, com controles, regras transcritas e particularidades da aplicação. Diferença sobre Espíritos da Natureza indicada junto ao leitor.
+- Build de produção aprovado. Navegador: capítulos, anterior/próxima, ampliação, alternância para guia online e fechamento conferidos. Layout inspecionado em computador e celular 390×844.
+- Alteração local para teste, sem envio ao GitHub.
+
+### 28/10/2026 — Resposta inesperada ao criar sala
+- Servidor local respondeu ao health check; criação de sala funcionou no navegador antes e depois da revisão. A falha transitória relatada (texto The page... em vez de JSON) não se repetiu durante a investigação; sua origem não foi determinada.
+- Leitura de respostas centralizada: texto/HTML ou estruturas inválidas geram mensagem de conexão compreensível, sem SyntaxError. Dados do formulário continuam preenchidos e ações sem confirmação não são repetidas automaticamente.
+- Erros JSON de validação mantêm códigos e mensagens originais, incluindo sala cheia. Respostas de erro da conexão SSE usam o mesmo tratamento.
+- 140 testes aprovados, build concluído e criação verificada no navegador. Sem publicação no GitHub.

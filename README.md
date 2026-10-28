@@ -114,3 +114,5 @@ No placar, o host pode escolher **Preparar revanche**. Os participantes e as op�
 A página inicial apresenta opções separadas para criar sala e entrar com código. O botão **Como jogar** contém um guia de preparação, turno, empilhamento, habitats e pontuação. No formulário **Criar sala**, escolha nome, avatar, número de participantes, lado do tabuleiro e expansão Pulsar. As opções são gravadas ao criar a sala. A mesa aguarda todos entrarem e inicia automaticamente.
 
 Ao criar ou entrar por código, escolha Corvo, Lontra, Coala ou Leão no campo **Seu avatar**. Durante a partida, clique no seu avatar na coluna de participantes para trocá-lo. A escolha fica salva na sala e permanece na revanche.
+
+O botão **Como jogar** também abre um **Manual ilustrado** com oito páginas em português, índice por assunto, navegação anterior/próxima e ampliação. A aba **Como jogar online** explica os controles e particularidades da aplicação. Origem das imagens em `docs/MANUAL-ILUSTRADO.md`.
