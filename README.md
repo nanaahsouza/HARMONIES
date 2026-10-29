@@ -116,3 +116,7 @@ A página inicial apresenta opções separadas para criar sala e entrar com cód
 Ao criar ou entrar por código, escolha Corvo, Lontra, Coala ou Leão no campo **Seu avatar**. Durante a partida, clique no seu avatar na coluna de participantes para trocá-lo. A escolha fica salva na sala e permanece na revanche.
 
 O botão **Como jogar** também abre um **Manual ilustrado** com oito páginas em português, índice por assunto, navegação anterior/próxima e ampliação. A aba **Como jogar online** explica os controles e particularidades da aplicação. Origem das imagens em `docs/MANUAL-ILUSTRADO.md`.
+
+## Modo solo
+
+Em **Criar sala**, escolha **1 jogador · Solo**. Começa imediatamente com três conjuntos e três cartas, descarte dos conjuntos não escolhidos a cada turno e troca opcional de uma carta ao encerrar se não pegou carta naquele turno. Resultado em pontos e sóis, sem Espíritos da Natureza; lados A/B e Pulsar disponíveis. Consulte `docs/SOLO.md` para as regras, fontes e limites da implementação.

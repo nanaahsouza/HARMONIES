@@ -358,3 +358,39 @@ Usuário autorizou o envio da versão atual. Build e 129 testes aprovados. Envio
 - Leitura de respostas centralizada: texto/HTML ou estruturas inválidas geram mensagem de conexão compreensível, sem SyntaxError. Dados do formulário continuam preenchidos e ações sem confirmação não são repetidas automaticamente.
 - Erros JSON de validação mantêm códigos e mensagens originais, incluindo sala cheia. Respostas de erro da conexão SSE usam o mesmo tratamento.
 - 140 testes aprovados, build concluído e criação verificada no navegador. Sem publicação no GitHub.
+
+### 29/10/2026 — Teste local de tabuleiro maior no celular
+- Usuária indicou tabuleiro e peças pequenos no celular. Removida a redução da mesa inteira em telas móveis; uso de largura natural, rolagem vertical e próprio tabuleiro antes dos demais.
+- Atalhos Meu tabuleiro e Cartas e peças, cartas disponíveis com rolagem horizontal e controles do turno acessíveis durante a rolagem. Peças da mão na lateral sem alterar a largura do tabuleiro.
+- Em 390×844, tabuleiro passou de aproximadamente 146px para 345px de largura. Tamanho 345px preservado antes/depois de escolher conjunto e colocar peça. Testadas três colocações, carta e reiniciar turno em sala QA; estado restaurado sem encerrar turno.
+- Layout conferido em 360×780 (315px), 390×844 (345px), 844×390 (636px), sala com quatro lugares e desktop (tabuleiros lado a lado, atalhos móveis ocultos, sem rolagem vertical).
+- Build aprovado. Correção Dockerfile trazida do GitHub preservada. Alterações locais para teste, sem publicação.
+
+### 29/10/2026 — Página inicial adaptada para celular
+- Arte inicial mais compacta, painel com espaçamento reduzido e ações de criar/entrar visíveis antes da rolagem em telas pequenas.
+- Botões maiores, texto com contraste e formulários com campos de 46px e fonte de 16px; seleção de avatar preservada.
+- Conferido no navegador em 390×844, 375×667, 320×568 e paisagem 844×390. Sem transbordamento horizontal; em 375×667 a página inteira cabe na tela e em 320×568 os dois botões aparecem antes do fim da tela.
+- Abertura de Criar sala, preenchimento e escolha do avatar verificados. Build aprovado. Desktop preservado com painel à direita e sem rolagem vertical em 1280×720.
+- Alterações locais para teste, sem envio ao GitHub.
+
+### 29/10/2026 — Manual sem cortes na página e na ampliação
+- Janela do manual usa altura flexível dentro da tela, reservando espaço para cabeçalho, navegação e rodapé.
+- Modo normal ajusta a página inteira à largura e à altura da área disponível; ampliação continua com rolagem para leitura.
+- Corrigido alinhamento central na ampliação que deslocava parte da página para fora da área rolável à esquerda. Retorno ao tamanho normal e mudança de página reiniciam a posição da leitura.
+- Build aprovado. Conferido em desktop, celular 390×844 e 375×667: imagem inteira cabe sem rolagem no modo normal e rodapé permanece dentro da tela. Ampliação de 800px começa pela borda esquerda e gera área rolável de 818px, sem conteúdo inacessível. Guia online preservado.
+- Alterações locais para teste, sem envio ao GitHub.
+
+### 29/10/2026 — Modo solo para teste local
+- Adicionada opção 1 jogador · Solo na criação, com início imediato, avatar, lados A/B e Pulsar opcional.
+- Três conjuntos e três cartas; descarte dos seis discos não escolhidos e reposição dos três espaços ao encerrar. Última oferta parcial fica jogável; fim quando a reposição começa com a bolsa vazia ou por ocupação do tabuleiro.
+- Troca opcional de uma carta apenas ao encerrar e somente se não pegou carta no turno. Marcação pode ser cancelada sem revelar a substituta antes do fim.
+- Resultado com pontos e sóis oficiais para a variante sem Espíritos da Natureza. Sem adversário artificial; nova partida solo disponível no resultado.
+- 148 testes aprovados, incluindo oito testes solo, e build concluído. Navegador: criação, trio, três colocações, troca de carta ao encerrar, partida completa, resultado (37 pontos / 3 sóis) e nova partida conferidos. Visual móvel 390×844 inspecionado.
+- Alterações locais; nenhum envio ao GitHub.
+
+### 29/10/2026 — Verificação antes da publicação móvel/solo
+- 150 testes aprovados, incluindo duas sessões HTTP/SSE, reconexão, persistência após reinício, avatares, Pulsar, solo e validação de origem HTTPS atrás de proxy.
+- Corrigida dedução de origem pública: com PUBLIC_ORIGIN vazio, HTTPS para o mesmo Host é aceito; domínio externo continua bloqueado. PUBLIC_ORIGIN explícito normaliza barra final.
+- Dockerfile preserva COPY src/shared acrescentado pela usuária e remove apenas CMD/EXPOSE duplicados. Docker não está disponível nesta máquina; a estrutura final de produção foi reproduzida em pasta temporária e validada com Node 24, assets, imports, health e criação sob origem HTTPS.
+- Site público informado pela usuária: https://harmonies-zaz8.onrender.com/. Antes da atualização, teste por duas sessões independentes no endereço público aprovou criação/convite, avatares, Pulsar, SSE, três peças, reinício de turno, passagem de turno, reconexão e encerramento em sala QA.
+- Acesso por duas redes físicas distintas e aparelhos reais depende de teste dos participantes; os testes móveis desta sessão usam dimensões simuladas de navegador. Publicação e verificação da versão nova continuam na etapa seguinte.

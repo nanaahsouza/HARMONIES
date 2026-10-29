@@ -15,13 +15,13 @@ Conferido em 26/10/2026 nas fontes oficiais:
 
 1. Crie ou use um repositório Git seu. Envie o conteúdo desta pasta, incluindo `Dockerfile`, `render.yaml`, o lockfile e as fontes. Não envie `node_modules`, banco, `.env` ou sessões de teste. Se o projeto for subpasta de um repositório maior, configure `rootDir` no blueprint para essa pasta.
 2. No Render, conecte esse repositório e escolha **New → Blueprint**. Selecione o `render.yaml` entregue. Confira os custos exibidos antes de contratar o serviço e o disco.
-3. O campo `PUBLIC_ORIGIN` deve conter a origem HTTPS real do serviço, sem barra final. Quando o endereço ainda não estiver disponível durante a criação, deixe esse valor vazio inicialmente, crie o serviço, copie a URL mostrada no painel e preencha a variável. Faça o redeploy que o painel solicitar. Não use um domínio fictício.
+3. `PUBLIC_ORIGIN` é opcional quando o proxy preserva o cabeçalho Host público. Sem ela, o servidor aceita HTTP ou HTTPS somente para o mesmo host da requisição. Para restringir a um endereço específico, configure a origem HTTPS real do serviço; espaços externos e barra final são normalizados. Não use domínio fictício.
 4. Confirme que `DATABASE_PATH=/var/data/harmonies.sqlite`, `PORT=3001`, disco em `/var/data`, uma única instância. O processo escuta `0.0.0.0`. Não use filesystem efêmero para o banco.
-5. O Docker executará instalação pelo lockfile, testes, TypeScript e build Vite. A imagem final contém somente frontend compilado, motor e servidor. `node:24-bookworm-slim` fornece o runtime que suporta TypeScript sem transpilar o backend e SQLite nativo.
+5. O Docker executará instalação pelo lockfile, testes, TypeScript e build Vite. A imagem final contém frontend compilado, package.json, motor, servidor e a pasta compartilhada src/shared. `node:24-bookworm-slim` fornece o runtime que suporta TypeScript sem transpilar o backend e SQLite nativo.
 6. Aguarde a implantação ficar saudável. Abra a URL HTTPS real e `/api/health` (deve responder `{"ok":true}`). Crie uma sala, teste o convite e a reconexão.
 7. Faça um redeploy de teste e confirme que a mesma sala permanece. Interrupções breves são esperadas com disco; o cliente tenta reconectar automaticamente.
 
-Não há chaves administrativas, credenciais de banco externo ou segredos obrigatórios no frontend. A conta Git e a conta Render são externas e dependem de você. Não foi criado repositório remoto nem efetuada cobrança.
+Não há chaves administrativas, credenciais de banco externo ou segredos obrigatórios no frontend. Contas Git e Render pertencem à usuária. O repositório atual é nanaahsouza/HARMONIES.
 
 ### Alternativa: servidor próprio com Docker
 
@@ -48,7 +48,7 @@ Para domínio próprio, adicione-o no painel Render, aplique exatamente os regis
 | Build falha | Node24, pnpm11.25, lockfile, logs TypeScript e esbuild; `allowBuilds.esbuild=true` já está configurado |
 | Página retorna erro de arquivo | Build deve gerar `dist/index.html`; `WORKDIR` da imagem é `/app` |
 | API responde mas não sincroniza | Resposta de `/events` deve permanecer aberta com status200 e `text/event-stream`; desative buffering/cache no proxy |
-| “Origem não autorizada” | `PUBLIC_ORIGIN` deve ser exatamente esquema+host+porta públicos usados no navegador, sem barra final |
+| “Origem não autorizada” | Se definido, `PUBLIC_ORIGIN` deve corresponder ao esquema+host+porta públicos usados no navegador; barra final é normalizada |
 | Dados somem após redeploy | Banco precisa estar sob o caminho do disco; não use serviço gratuito/efêmero para esta configuração |
 | “Sala cheia” ao voltar | Abra o navegador/perfil e origem originais; o nome não recupera uma sessão perdida |
 | “Estado desatualizado” | Houve ação concorrente ou snapshot atrasado; aguarde sincronização e faça nova escolha |

@@ -39,7 +39,7 @@ for(const n of [2,3,4])for(let first=0;first<n;first++){
 }
 test('N04 capacidade, confirmações, assentos, encerramento pelo host e legado',()=>{
  const store=new Store(':memory:');try{
-  for(const n of [1,5,2.5])assert.throws(()=>store.create('Host',n),/2 e 4/);
+  for(const n of [0,5,2.5])assert.throws(()=>store.create('Host',n),/1 e 4/);
   const a=store.create('Host',4),code=a.room.code,tokens=[a.token];
   const act=(seat:number,action:Record<string,unknown>)=>store.act(code,tokens[seat],{id:randomUUID(),revision:store.get(code).revision,action});
   act(0,{type:'ready',ready:true});assert.throws(()=>act(0,{type:'start'}),/lugares/);

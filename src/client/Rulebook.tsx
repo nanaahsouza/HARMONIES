@@ -1,4 +1,4 @@
-import React,{useRef,useState} from 'react';
+import React,{useRef,useState,useLayoutEffect} from 'react';
 
 const pages=[
  {spread:2,side:0,title:'Objetivo e componentes',note:'Conheça as peças e os elementos da paisagem.'},
@@ -13,8 +13,9 @@ const pages=[
 export function Rulebook({dialogRef,children}:{dialogRef:React.RefObject<HTMLDialogElement|null>;children:React.ReactNode}){
  const [mode,setMode]=useState<'book'|'online'>('book'),[page,setPage]=useState(0),[zoom,setZoom]=useState(false);
  const reader=useRef<HTMLDivElement>(null),current=pages[page];
+ useLayoutEffect(()=>{reader.current?.scrollTo({top:0,left:0});},[page,zoom,mode]);
  const changePage=(index:number)=>{setPage(index);setZoom(false);reader.current?.scrollTo({top:0,left:0});};
- return <dialog ref={dialogRef} className="home-dialog how-to-play manual-dialog" aria-labelledby="help-title">
+ return <dialog ref={dialogRef} className="home-dialog how-to-play manual-dialog" aria-labelledby="help-title" onClose={()=>setZoom(false)}>
   <header className="manual-header"><div><p>HARMONIES · LIVRO DE REGRAS</p><h2 id="help-title">Como jogar</h2></div><button type="button" className="manual-close" aria-label="Fechar instruções" onClick={()=>dialogRef.current?.close()}>×</button></header>
   <div className="manual-modes" role="group" aria-label="Versão das instruções"><button type="button" aria-pressed={mode==='book'} onClick={()=>setMode('book')}>Manual ilustrado</button><button type="button" aria-pressed={mode==='online'} onClick={()=>setMode('online')}>Como jogar online</button></div>
   {mode==='book'?<div className="manual-book">

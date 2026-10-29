@@ -86,3 +86,26 @@ test('M05 quatro sessões HTTP/SSE: identidade, conexão, sincronização e host
   for(const connection of connections){const state=await connection.next(final.body.revision);assert.equal(state.game.finished,true);assert.equal(state.game.endReason,'host');assert.equal(state.game.players[2].cards.length,0);assert.equal('turnStart' in state,false);}
  }finally{connections.forEach(s=>s.abort.abort());await stop(app);}
 });
+
+test('M06 origem HTTPS atrás de proxy aceita duas sessões sem PUBLIC_ORIGIN',async()=>{
+ const app=createApp({database:':memory:'}),base=await listen(app);let events:Awaited<ReturnType<typeof stream>>|undefined;
+ const publicOrigin=base.replace('http:','https:');
+ const post=async(path:string,data:unknown,token='',origin=publicOrigin)=>{const r=await fetch(base+path,{method:'POST',headers:{'Content-Type':'application/json',Origin:origin,...(token?{Authorization:`Bearer ${token}`}:{})},body:JSON.stringify(data)});return {status:r.status,body:await r.json()};};
+ try{
+  const created=await post('/api/rooms',{name:'Celular A',playerCount:2,directPlay:true}),a=created.body;assert.equal(created.status,201);
+  const path=`/api/rooms/${a.state.code}`,joined=await post(path+'/join',{name:'Celular B',avatar:'leao'}),b=joined.body;assert.equal(joined.status,201);assert.ok(b.state.game);
+  events=await stream(base,a.state.code,b.token);
+  const taken=await post(path+'/actions',{id:randomUUID(),revision:b.state.revision,action:{type:'takeTokens',slot:0}},a.token);assert.equal(taken.status,200);
+  assert.equal((await events.next(taken.body.revision)).game.hand.length,3);
+  const bad=await post('/api/rooms',{name:'Outra origem'},'','https://evil.test');assert.equal(bad.status,400);assert.equal(bad.body.code,'ORIGIN');
+  const malformed=await post('/api/rooms',{name:'Origem malformada'},'','null');assert.equal(malformed.status,400);
+ }finally{events?.abort.abort();await stop(app);}
+});
+test('M07 PUBLIC_ORIGIN normaliza barra final sem liberar outros domínios',async()=>{
+ const app=createApp({database:':memory:',origin:'https://harmonies.example/'}),base=await listen(app);
+ try{
+  for(const [origin,status] of [['https://harmonies.example',201],['https://evil.example',400],['http://harmonies.example',400]] as const){
+   const r=await fetch(base+'/api/rooms',{method:'POST',headers:{'Content-Type':'application/json',Origin:origin},body:JSON.stringify({name:'Teste origem'})});assert.equal(r.status,status);
+  }
+ }finally{await stop(app);}
+});

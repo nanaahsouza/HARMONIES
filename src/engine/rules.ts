@@ -33,12 +33,13 @@ export function legalHabitats(board:Board,card:AnimalCard,allowMirror=false):{an
 export function setup(side:Side,first:number,bag:Color[],deck:string[],catalog:AnimalCard[],pulse=false,playerCount=2):Game {
  validateCatalog(catalog,pulse);
  requireRule(side==='A'||side==='B','SIDE','Lado inválido.');
- requireRule(Number.isInteger(playerCount)&&playerCount>=2&&playerCount<=4,'PLAYER_COUNT','Escolha entre 2 e 4 jogadores.');
+ requireRule(Number.isInteger(playerCount)&&playerCount>=1&&playerCount<=4,'PLAYER_COUNT','Escolha entre 1 e 4 jogadores.');
  requireRule(Number.isInteger(first)&&first>=0&&first<playerCount,'FIRST','Primeiro jogador inválido.');
  requireRule(bag.length===120&&COLORS.every(c=>bag.filter(t=>t===c).length===COUNTS[c]),'BAG','Distribuição incorreta de peças.');
  requireRule(deck.length===catalog.length&&new Set(deck).size===catalog.length&&deck.every(id=>catalog.some(c=>c.id===id)),'DECK','Baralho inválido.');
  const tokens=[...bag],cards=[...deck];
- return {pulse,side,first,turn:first,players:Array.from({length:playerCount},()=>({board:emptyBoard(),cards:[],turns:0})),bag:tokens.slice(15),deck:cards.slice(5),market:Array.from({length:5},(_,i)=>tokens.slice(i*3,i*3+3)),animals:cards.slice(0,5),selected:null,hand:[],tookCard:false,finalRound:false,finished:false};
+ const spaces=playerCount===1?3:5;
+ return {pulse,side,first,turn:first,players:Array.from({length:playerCount},()=>({board:emptyBoard(),cards:[],turns:0})),bag:tokens.slice(spaces*3),deck:cards.slice(spaces),market:Array.from({length:spaces},(_,i)=>tokens.slice(i*3,i*3+3)),animals:cards.slice(0,spaces),selected:null,hand:[],tookCard:false,finalRound:false,finished:false};
 }
 export function applyAction(state:Game,player:number,action:Action,catalog:AnimalCard[]):Game {
  requireRule(!state.finished,'FINISHED','A partida terminou.');
@@ -73,9 +74,16 @@ export function applyAction(state:Game,player:number,action:Action,catalog:Anima
   }
   case 'endTurn':{
    requireRule(s.selected!==null&&s.hand.length===0,'INCOMPLETE_TURN','Pegue e posicione as três peças antes de encerrar.');
+   const solo=s.players.length===1;
+   if(action.discardCard!==undefined){
+    requireRule(solo&&!s.tookCard,'SOLO_DISCARD','Só é possível trocar uma carta no solo se não pegou carta neste turno.');
+    requireRule(Number.isInteger(action.discardCard)&&!!s.animals[action.discardCard]&&s.deck.length>0,'SOLO_DISCARD','Escolha uma carta disponível com cartas restantes no baralho.');
+    s.animals[action.discardCard]=null;
+   }
    // A bolsa fica vazia ao fim de uma reposição; o gatilho ocorre na próxima reposição que a encontra vazia.
    if(s.bag.length===0)s.finalRound=true;
-   else {requireRule(s.bag.length>=3,'BAG_CORRUPT','Bolsa inconsistente.');s.market[s.selected]=s.bag.splice(0,3);}
+   else {requireRule(s.bag.length>=3&&s.bag.length%3===0,'BAG_CORRUPT','Bolsa inconsistente.');if(solo)s.market=Array.from({length:3},()=>s.bag.splice(0,3));else s.market[s.selected]=s.bag.splice(0,3);}
+   if(solo&&s.finalRound)s.market=Array.from({length:3},()=>[]);
    s.animals=s.animals.map(c=>c??s.deck.shift()??null);
    if(Object.values(p.board).filter(c=>c.stack.length===0).length<=2)s.finalRound=true;
    p.turns++;

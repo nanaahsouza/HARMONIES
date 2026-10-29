@@ -16,5 +16,3 @@ COPY --from=build /app/src/server ./src/server
 COPY --from=build /app/src/shared ./src/shared
 EXPOSE 3001
 CMD ["node", "src/server/main.ts"]
-EXPOSE 3001
-CMD ["node", "src/server/main.ts"]

@@ -151,3 +151,51 @@ body:has(.home-redesign) .welcome.home-redesign{min-height:100dvh;padding:19dvh 
 .home-redesign .join-choice>b{border-color:#e4dccb88}
 .home-redesign .home-choice.join-choice:hover:enabled,.home-redesign .home-choice.join-choice:focus-visible{background:linear-gradient(135deg,#397a76,#204c4f);color:#fffdf1;border-color:#c4e7ad;box-shadow:0 0 0 2px #efffd16b,0 0 22px #d5ed9a9c,inset 0 0 14px #e2f9c51c;transform:none}
 @media(prefers-reduced-motion:reduce){.home-redesign .home-choice.join-choice{transition:none}}
+
+/* Entrada confortável no celular: arte compacta e ações ao alcance. */
+@media(max-width:800px){
+ body:has(.home-redesign){overflow-x:hidden}
+ body:has(.home-redesign) .welcome.home-redesign{padding:clamp(155px,25svh,225px) 12px max(16px,env(safe-area-inset-bottom));min-height:100svh}
+ .home-redesign .home-art{background-size:auto clamp(370px,53svh,470px);background-position:30% top;background-color:#2d6264}
+ .home-redesign .home-panel{padding:22px 20px 18px;gap:16px;border-radius:24px;background:linear-gradient(130deg,#fff6dff5,#fff7e8ed);box-shadow:0 8px 30px #153f4240;backdrop-filter:blur(6px)}
+ .home-redesign .home-introduction h1{font-size:clamp(29px,8vw,35px);line-height:1.08;letter-spacing:-.9px;margin:0 0 11px}
+ .home-redesign .home-description{font-size:13px;line-height:1.5;max-width:none;color:#526c68}
+ .home-redesign .home-nav{top:max(14px,env(safe-area-inset-top));right:14px}
+ .home-redesign .home-nav button{min-height:44px;padding:10px 17px;font-size:14px;gap:8px}
+ .home-redesign .home-nav svg{width:20px;height:20px;flex-basis:20px}
+ .home-redesign .home-choices{gap:10px}
+ .home-redesign .home-choice{min-height:76px;padding:12px;gap:11px;border-radius:16px}
+ .home-redesign .home-choice strong{font-size:17px;line-height:1.25;margin-bottom:5px}
+ .home-redesign .home-choice small{font-size:11px;line-height:1.4}
+ .home-redesign .choice-icon{flex-basis:39px;height:43px;border-radius:13px}
+ .home-redesign .choice-icon svg{width:25px;height:25px}
+ .home-redesign .home-choice>b{flex-basis:26px;height:26px;font-size:18px}
+ .home-redesign .home-about{gap:11px;margin:0;padding-top:1px}
+ .home-redesign .home-about>img{width:58px;flex:0 0 58px;height:auto}
+ .home-redesign .home-about h2{font-size:9px;margin-bottom:4px}
+ .home-redesign .home-about p{font-size:11px;line-height:1.5}
+ .home-dialog[aria-labelledby="entry-title"]{width:calc(100vw - 20px);max-width:480px;max-height:calc(100dvh - 20px);padding:25px 20px 20px;border-radius:22px;overscroll-behavior:contain;scroll-padding-bottom:20px}
+ .home-dialog[aria-labelledby="entry-title"] h2{font-size:25px;line-height:1.15;padding-right:25px}
+ .home-dialog[aria-labelledby="entry-title"] label{font-size:13px;gap:6px;margin:12px 0}
+ .home-dialog[aria-labelledby="entry-title"] input:not([type="checkbox"]),.home-dialog[aria-labelledby="entry-title"] select{font-size:16px;min-height:46px;padding:10px 11px}
+ .home-dialog[aria-labelledby="entry-title"] form>.primary{min-height:46px;font-size:14px}
+ .home-dialog[aria-labelledby="entry-title"] .create-avatar-options .avatar-options button{min-height:75px;font-size:12px;gap:6px}
+ .home-dialog[aria-labelledby="entry-title"] .create-avatar-options .animal-avatar{width:43px;height:43px}
+ .home-dialog[aria-labelledby="entry-title"] .create-pulse{min-height:62px}
+ .home-dialog[aria-labelledby="entry-title"] .create-pulse input{width:24px;height:24px;flex-basis:24px}
+}
+@media(max-width:370px){
+ .home-redesign .home-panel{padding:21px 15px 16px;gap:14px}
+ .home-redesign .home-choice{padding:11px 9px;gap:9px}
+ .home-redesign .home-choice strong{font-size:16px}
+ .home-redesign .home-choice small{font-size:10px}
+}
+@media(max-width:900px) and (max-height:500px){
+ body:has(.home-redesign) .welcome.home-redesign{display:flex;justify-content:flex-end;padding:75px 18px 18px;min-height:100dvh}
+ .home-redesign .home-art{background-size:cover;background-position:center;background-color:#efd05c}
+ .home-redesign .home-panel{width:52%;min-height:0;padding:20px;gap:14px;clip-path:none}
+ .home-redesign .home-introduction h1{font-size:29px}
+ .home-redesign .home-choice{min-height:70px;padding:10px}
+ .home-redesign .home-nav{position:absolute;top:13px;right:20px}
+ .home-redesign .home-nav button{font-size:14px;padding:10px 17px;min-height:44px}
+}

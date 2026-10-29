@@ -1,6 +1,11 @@
 import type {AnimalCard,Board,Game,HeldCard,Side} from './model.ts';
 import {groups,key,neighbors} from './geometry.ts';
 const heights=[0,1,3,7];
+// Manual BR, p. 11: sóis por pontos + lado A (1) / B (0) + sem Espírito (2).
+export function soloSuns(total:number,side:Side){
+ const points=[40,70,90,110,130,140,150,160].filter(n=>total>=n).length,board=side==='A'?1:0,withoutSpirit=2;
+ return {points,board,withoutSpirit,total:points+board+withoutSpirit};
+}
 export function riverLength(board:Board):number {
  let length=0;
  for(const component of groups(board,id=>board[id].stack.at(-1)==='blue')){
@@ -30,6 +35,7 @@ export function scores(game:Game,catalog:AnimalCard[]){return game.players.map(p
  return {...landscape,landscape:landscape.total,animals,total:landscape.total+animals,cubes};
 });}
 export function winners(game:Game,catalog:AnimalCard[]):number[]{
+ if(game.players.length===1)return [];
  const score=scores(game,catalog),best=Math.max(...score.map(s=>s.total)),tied=score.map((s,i)=>({s,i})).filter(({s})=>s.total===best),cubes=Math.max(...tied.map(({s})=>s.cubes));
  return tied.filter(({s})=>s.cubes===cubes).map(({i})=>i);
 }

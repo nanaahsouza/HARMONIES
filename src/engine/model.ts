@@ -24,7 +24,7 @@ export type Action =
  | {type:'placeToken';color:Color;cell:string}
  | {type:'takeCard';slot:number}
  | {type:'placeAnimal';card:string;anchor:string;rotation:number;mirrored?:boolean}
- | {type:'endTurn'};
+ | {type:'endTurn';discardCard?:number};
 export const COLORS:Color[]=['blue','gray','brown','green','yellow','red'];
 // Manual BR, p. 2: estes números somam 120, não 20 de cada cor.
 export const COUNTS:Record<Color,number>={blue:23,gray:23,brown:21,green:19,yellow:19,red:15};

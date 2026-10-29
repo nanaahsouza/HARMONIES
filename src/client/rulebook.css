@@ -58,3 +58,36 @@
  .manual-footer>span{max-width:180px;font-size:8px}
  .manual-digital{padding:4px 18px 25px;height:calc(100dvh - 210px)}
 }
+
+/* A página inteira cabe na área de leitura; rolagem só ao ampliar. */
+.home-dialog.how-to-play.manual-dialog[open]{display:flex;flex-direction:column;height:min(940px,calc(100dvh - 32px));max-height:calc(100dvh - 32px)}
+.manual-dialog .manual-header,.manual-modes,.manual-footer{flex:0 0 auto}
+.manual-dialog .manual-book{flex:1;min-height:0;height:auto}
+.manual-dialog .manual-index{min-height:0}
+.manual-dialog .manual-page-toolbar,.manual-dialog .manual-caption,.manual-dialog .manual-online-note{flex:0 0 auto}
+.manual-dialog .manual-reader{container-type:size;display:grid;place-items:center;min-height:0;min-width:0;scrollbar-gutter:auto}
+.manual-dialog .manual-sheet:not(.is-zoomed){width:min(100cqw,calc(100cqh * 823 / 852));max-width:675px;height:auto;margin:0;flex:none}
+.manual-dialog .manual-reader:has(.is-zoomed){display:block}
+.manual-dialog .manual-digital{flex:1;height:auto;min-height:0}
+.manual-caption button{min-width:36px;min-height:36px}
+@media(max-width:700px){
+ .home-dialog.how-to-play.manual-dialog[open]{height:calc(100dvh - 20px);max-height:calc(100dvh - 20px)}
+ .manual-dialog .manual-book{height:auto;min-height:0}
+ .manual-dialog .manual-index{max-height:65px}
+ .manual-dialog .manual-footer{padding:8px 12px}
+ .manual-dialog .manual-caption{padding:7px 10px}
+ .manual-dialog .manual-digital{height:auto;min-height:0}
+}
+@media(max-height:500px){
+ .home-redesign .manual-dialog .manual-header{padding:9px 17px}
+ .manual-dialog .manual-header p{display:none}
+ .manual-dialog .manual-header h2{font-size:21px}
+ .manual-dialog .manual-modes{padding:0 17px 8px}
+ .manual-dialog .manual-footer{padding:6px 15px}
+ .manual-dialog .manual-online-note{display:none}
+ .manual-dialog .manual-caption p{font-size:9px}
+ .manual-dialog .manual-page-toolbar{padding:6px 12px}
+}
+/* A ampliação começa pela borda esquerda e permite alcançar toda a página. */
+.manual-dialog .manual-reader:has(.is-zoomed){place-items:normal;text-align:left}
+.manual-dialog .manual-sheet.is-zoomed{justify-self:start;align-self:start}

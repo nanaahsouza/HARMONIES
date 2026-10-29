@@ -35,11 +35,11 @@ export class Store {
   const avatar=options.avatar===undefined?avatarForSeat(0):options.avatar;
   requireRule(typeof avatar==='string'&&(AVATAR_IDS as readonly string[]).includes(avatar),'AVATAR','Escolha um dos quatro animais disponíveis.');
   requireRule(options.directPlay===undefined||typeof options.directPlay==='boolean','OPTIONS','Opção de entrada inválida.');
-  requireRule(Number.isInteger(playerCount)&&playerCount>=2&&playerCount<=4,'PLAYER_COUNT','Escolha entre 2 e 4 jogadores.');return this.transaction(()=>{
+  requireRule(Number.isInteger(playerCount)&&playerCount>=1&&playerCount<=4,'PLAYER_COUNT','Escolha entre 1 e 4 jogadores.');return this.transaction(()=>{
   let code:string;do{code=randomBytes(9).toString('base64url').toUpperCase();}while(this.db.prepare('SELECT 1 FROM rooms WHERE code=?').get(code));
   const token=randomBytes(32).toString('base64url'),now=new Date().toISOString();
   const room:Room={code,revision:0,createdAt:now,updatedAt:now,side,first:0,playerCount,pulse,seats:[{name,ready:false,avatar:avatar as AvatarId}],game:null};
-  room.directPlay=options.directPlay===true;
+  room.directPlay=options.directPlay===true||playerCount===1;this.startWhenFull(room);
   this.save(room);this.db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hash(token),code,0);return {room,token,seat:0};
  });}
  join(code:string,name:string,avatar?:unknown){return this.transaction(()=>{
@@ -71,7 +71,7 @@ export class Store {
   }else if(action.type==='configure'){
    requireRule(!room.game,'STARTED','A partida já começou.');requireRule(seat===0,'HOST','Somente o criador pode ajustar a preparação.');
    requireRule(action.side==='A'||action.side==='B','SIDE','Lado inválido.');const count=action.playerCount??room.playerCount;
-   requireRule(typeof count==='number'&&Number.isInteger(count)&&count>=2&&count<=4&&count>=room.seats.length,'PLAYER_COUNT','Escolha entre 2 e 4 lugares, sem remover participantes.');
+   requireRule(typeof count==='number'&&Number.isInteger(count)&&count>=1&&count<=4&&count>=room.seats.length,'PLAYER_COUNT','Escolha entre 1 e 4 lugares, sem remover participantes.');
    requireRule(typeof action.first==='number'&&Number.isInteger(action.first)&&action.first>=0&&action.first<room.seats.length,'FIRST','Primeiro jogador inválido.');
    requireRule(action.pulse===undefined||typeof action.pulse==='boolean','EXPANSION','Opção Pulsar inválida.');
    room.playerCount=count;room.side=action.side;room.first=action.first;room.pulse=(action.pulse??room.pulse) as boolean;room.seats.forEach(s=>s.ready=false);
@@ -119,7 +119,7 @@ export class Store {
    animals:Object.fromEntries(game.players[seat].cards.filter(h=>h.placed<(catalog.find(c=>c.id===h.id)?.points.length??0)).map(h=>[h.id,legalHabitats(game.players[seat].board,catalog.find(c=>c.id===h.id)!,game.pulse??false)]))
   }:{tokens:{},animals:{}}}:null;
   const preview=game?null:setup(room.side,room.first,freshTokens(),catalog.map(c=>c.id),catalog,room.pulse,room.playerCount);
-  const tablePreview=preview?{...preview,bag:undefined,deck:undefined,bagCount:0,deckCount:catalog.length,animals:Array(5).fill(null) as (string|null)[],market:Array.from({length:5},()=>[]),scores:scores(preview,catalog),winners:[] as number[],hints:{tokens:{},animals:{}}}:null;
+  const tablePreview=preview?{...preview,bag:undefined,deck:undefined,bagCount:0,deckCount:catalog.length,animals:Array(room.playerCount===1?3:5).fill(null) as (string|null)[],market:Array.from({length:room.playerCount===1?3:5},()=>[]),scores:scores(preview,catalog),winners:[] as number[],hints:{tokens:{},animals:{}}}:null;
   const {turnStart,...publicRoom}=room;
   return {...publicRoom,canRestart:!!game&&!game.finished&&game.turn===seat&&turnStart?.turn===seat,seats:room.seats.map((s,i)=>({...s,avatar:s.avatar??avatarForSeat(i),connected:connected[i]??false})),game:visible,tablePreview,seat,catalog,catalogStatus:catalogStatus(game?.pulse??room.pulse)};
  }

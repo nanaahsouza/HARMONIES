@@ -20,7 +20,12 @@ export function createApp({database='data/harmonies.sqlite',origin='',dist=resol
     const ip=req.socket.remoteAddress??'unknown',now=Date.now();let limit=limits.get(ip);if(!limit||now>limit.until){limit={n:0,until:now+60_000};limits.set(ip,limit);}
     if(limits.size>10_000)for(const [k,v] of limits)if(v.until<now)limits.delete(k);
     requireRule(++limit.n<=240,'RATE_LIMIT','Muitas requisições. Aguarde um minuto.');
-    if(req.headers.origin){const expected=origin||`http://${req.headers.host}`;requireRule(req.headers.origin===expected,'ORIGIN','Origem da requisição não autorizada.');}
+    if(req.headers.origin){
+     // O proxy HTTPS pode se conectar ao Node por HTTP; não deduzir o esquema público pelo socket.
+     let allowed=false;
+     try{const incoming=new URL(req.headers.origin);allowed=['http:','https:'].includes(incoming.protocol)&&incoming.origin===req.headers.origin&&(origin.trim()?incoming.origin===new URL(origin.trim()).origin:incoming.host===req.headers.host);}catch{}
+     requireRule(allowed,'ORIGIN','Origem da requisição não autorizada.');
+    }
     if(req.method==='POST'&&url.pathname==='/api/rooms'){
      const data=await body(req),created=store.create(safeName(data.name),data.playerCount??2,{side:data.side,pulse:data.pulse,avatar:data.avatar,directPlay:data.directPlay});json(res,201,{token:created.token,state:store.public(created.room,0)});return;
     }

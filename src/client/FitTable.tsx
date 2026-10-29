@@ -8,6 +8,10 @@ export function FitTable({children}:{children:React.ReactNode}){
   let pending=0;
   const fit=()=>{
    const width=container.clientWidth,height=container.clientHeight;if(!width||!height)return;
+   if(window.matchMedia('(max-width:800px), (max-width:900px) and (max-height:500px)').matches){
+    stage.style.width='100%';stage.style.transform='none';stage.style.left='0';
+    stage.style.setProperty('--table-width',`${width}px`);return;
+   }
    const naturalWidth=Math.max(width,width<700?600:900);
    stage.style.width=`${naturalWidth}px`;
    stage.style.setProperty('--table-width',`${naturalWidth}px`);
@@ -20,5 +24,5 @@ export function FitTable({children}:{children:React.ReactNode}){
   const observer=new ResizeObserver(schedule);observer.observe(container);observer.observe(stage);fit();
   return()=>{observer.disconnect();cancelAnimationFrame(pending);};
  },[]);
- return <div className="table-fit" ref={frame}><div className="table-stage" ref={table}>{children}</div></div>;
+ return <div className="table-fit" ref={frame}><div className="table-stage" ref={table}><nav className="mobile-table-nav" aria-label="Atalhos da mesa"><a href="#my-table">Meu tabuleiro</a><a href="#available-pieces">Cartas e peças</a></nav>{children}</div></div>;
 }
