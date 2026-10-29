@@ -394,3 +394,10 @@ Usuário autorizou o envio da versão atual. Build e 129 testes aprovados. Envio
 - Dockerfile preserva COPY src/shared acrescentado pela usuária e remove apenas CMD/EXPOSE duplicados. Docker não está disponível nesta máquina; a estrutura final de produção foi reproduzida em pasta temporária e validada com Node 24, assets, imports, health e criação sob origem HTTPS.
 - Site público informado pela usuária: https://harmonies-zaz8.onrender.com/. Antes da atualização, teste por duas sessões independentes no endereço público aprovou criação/convite, avatares, Pulsar, SSE, três peças, reinício de turno, passagem de turno, reconexão e encerramento em sala QA.
 - Acesso por duas redes físicas distintas e aparelhos reais depende de teste dos participantes; os testes móveis desta sessão usam dimensões simuladas de navegador. Publicação e verificação da versão nova continuam na etapa seguinte.
+
+### 29/10/2026 — Criar sala com seleção visual de tabuleiro
+- Formulário de criação com fundo amarelo claro, campos e botão em verde e avatares no estilo da referência.
+- Substituído seletor textual A/B por duas opções com prévias clicáveis: A · Rio (imagem existente recortada no SVG) e B · Ilhas (prévia vetorial azul com os 23 espaços). A arte dos tabuleiros durante a partida não foi alterada nesta mudança.
+- Radio buttons nativos com legenda, seleção por teclado e destaque visual. Solo, participantes, avatar e Pulsar preservados.
+- Build aprovado. Navegador: seleção A/B por teclado, toque em Ilhas, ativação de Pulsar e criação confirmaram Base + Pulsar / Lado B. Layout conferido em 390×844 e 1280×960; em telas baixas o formulário mantém rolagem interna.
+- Alteração local para teste, sem envio ao GitHub.
